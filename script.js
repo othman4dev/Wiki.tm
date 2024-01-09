@@ -6,7 +6,7 @@ let sideForm1 = `
     <form onsubmit="return false;">
         <h1 class="white">Welcome To Wiki.tm</h1>
         <div class="bg-white">
-            <img src="../public/assets/images/wikis.svg" alt=""><h1>iki.tm</h1>
+            <img src="assets/wikis.svg" alt=""><h1>iki.tm</h1>
         </div>
         <p class="white">Don't have an Account ? .Sign Up Now !</p>
         <button class="sign-up" onclick="toggleAuth(0)">
@@ -20,7 +20,7 @@ let sideForm2 = `
     <form onsubmit="return false;">
         <h1 class="white">Welcome To Wiki.tm</h1>
         <div class="bg-white">
-            <img src="../public/assets/images/wikis.svg" alt=""><h1>iki.tm</h1>
+            <img src="assets/wikis.svg" alt=""><h1>iki.tm</h1>
         </div>
         <p class="white">Already have an Account ? .Login Now !</p>
         <button class="sign-up" onclick="toggleAuth(1)">
@@ -30,7 +30,7 @@ let sideForm2 = `
 </div>
 `;
 let login = `
-<form action="../public/index.php?route=login" method="post" class="ini-form">
+<form action="auth.php" method="post" class="ini-form">
     <div class="login-header">
         <i class="bi bi-person-circle" style="font-size: 48px;"></i>
         <h2>Login</h2>
@@ -48,7 +48,7 @@ let login = `
 </form>
 `;
 let register = `
-<form action="../public/index.php?route=register" method="post"  onsubmit="return false;" class="ini-form">
+<form action="auth.php" method="post"  onsubmit="return false;" class="ini-form">
     <div class="login-header">
         <i class="bi bi-person-circle" style="font-size: 48px;"></i>
         <h2>Register</h2>
