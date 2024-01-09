@@ -1,0 +1,15 @@
+{
+    "name": "youcode/wiki.tm",
+    "autoload": {
+        "psr-4": {
+            "Youcode\\WikiTm\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "othmandevsup",
+            "email": "othmandevsup@gmail.com"
+        }
+    ],
+    "require": {}
+}

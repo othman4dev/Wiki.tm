@@ -1,0 +1,132 @@
+.main-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 84vh;
+    width: 100%;
+}
+.auth {
+    display: flex;
+    height: 500px;
+    width: 60%;
+    border-radius: 15px;
+}
+.login form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    padding: 20px;
+    padding-top: 10%;
+}
+.register form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    padding: 20px;
+    padding-top: 10%;
+}
+.login {
+    background-color: #fff;
+    flex-grow: 1;
+}
+.register {
+    background-color: #0091dc;
+    flex-grow: 1;
+}
+input[type="text"] {
+    height: 50px;
+    background-color: transparent;
+    border: solid 1px rgb(90, 93, 121);
+    outline: none;
+    padding: 10px;
+    color: rgb(90, 93, 121);
+    font-size: 18px;
+    border-radius: 5px;
+    width: 100%;
+}
+input[type="password"] {
+    height: 50px;
+    background-color: transparent;
+    border: solid 1px rgb(90, 93, 121);
+    outline: none;
+    padding: 10px;
+    color: rgb(90, 93, 121);
+    font-size: 18px;
+    border-radius: 5px;
+    width: 100%;
+}
+input[type="submit"] {
+    background-color: #0091dc;
+    color: #fff;
+    border: none;
+    outline: none;
+    padding: 10px;
+    width: 80%;
+    height: 50px;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+label {
+    flex-grow: 1;
+    width: 80%;
+    position: relative;
+}
+.login-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+.moved {
+    position: absolute;
+    top: 9px;
+    left: 10px;
+    background-color: #fff;
+    border-radius: 100%;
+    padding: 5px;
+    box-sizing: content-box;
+    width: fit-content;
+    transition: 0.3s;
+    cursor: text;
+}
+.white {
+    color: #fff;
+}
+.sign-up {
+    color: #fff;
+    cursor: pointer;
+    background-color: #0091dc;
+    border: solid 4px #fff;
+    height: 45px;
+    width: 130px;
+    font-size: 15px;
+}
+.sign-up:hover {
+    background-color: #fff;
+    color: #0091dc;
+    transition: 0.3s;
+}
+.bg-white {
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    height: 70px;
+    border-radius: 5px;
+    padding: 5px;
+    box-sizing: content-box;
+}
+.bg-white img {
+    height: 150%;
+    margin-top: -50px;
+}
+.bg-white h1 {
+    color: #0091dc;
+    font-size: 60px;
+}
+.footer-left {
+    display: flex;
+    align-items: center;
+}
