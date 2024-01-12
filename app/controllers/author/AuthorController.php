@@ -27,7 +27,7 @@
                 $data['same'] = HomeModel::getSameAuthor($_SESSION['user']['id']);
                 $controller->view('/author/account', $data);
             } else {
-                $controller->view('/author/account/error');
+                $controller->view('/error');
             }
         }
         public static function editWiki() {
@@ -61,16 +61,48 @@
                 $data['same'] = HomeModel::getSameAuthor($_SESSION['user']['id']);
                 $controller->view('author/account' , $data);
             } else {
-                $controller->view('author/updateWiki?error=1');
+                $controller->view('/error');
             }
         }
         public static function deleteWiki() {
             $wiki = AuthorModel::deleteWiki($_GET['id']);
             $controller = new \App\Controller();
             if ($wiki) {
-                $controller->view('author/account');
+                $data['user'] = UserModel::userInfo();
+                $data['category'] = AuthorModel::getCategory();
+                $data['allTags'] = AuthorModel::getTags();
+                $data['tags'] = HomeModel::getTags();
+                $data['wikis'] = AuthorModel::getAuthor();
+                $data['same'] = HomeModel::getSameAuthor($_SESSION['user']['id']);
+                $controller->view('author/account' , $data);
             } else {
-                $controller->view('author/deleteWiki?error=1');
+                $controller->view('/error');
             }
+        }
+        public static function editAccount() {
+            if (!empty($_POST['old-password']) && !empty($_POST['password'])) {
+                if (password_verify($_POST['old-password'], $_SESSION['user']['password'])) {
+                    $data['success'] = UserModel::updatePassword($_POST['old-password'], $_POST['password']);
+                } else {
+                    $data['message'] = 'Password is incorrect';
+                }
+            }
+            if (!empty($_POST['name'])) {
+                $data['success'] = UserModel::updateName($_POST['name']);
+            }
+            $email = $_POST['email'];
+            if (!empty($email)) {
+                $data['success'] = UserModel::updateEmail($email);
+            }
+            $controller = new \App\Controller();
+            $data['user'] = UserModel::userInfo();
+            $data['category'] = AuthorModel::getCategory();
+            $data['allTags'] = AuthorModel::getTags();
+            $data['tags'] = HomeModel::getTags();
+            $data['wikis'] = AuthorModel::getAuthor();
+            $data['same'] = HomeModel::getSameAuthor($_SESSION['user']['id']);
+            $data['tagsCount'] = HomeModel::getTagsCount();
+            $data['categoryCount'] = HomeModel::getCategoryCount();
+            $controller->view('/author/account', $data);
         }
     }

@@ -249,21 +249,85 @@ function submitAcc() {
     if (pass1.value != '' || pass2.value != ''|| passold.value != ''){
         if (pass1.value =='') {
             pass1.setCustomValidity('Please Fill This Feild');
-        }
+        } else 
         if (pass2.value == '') {
             pass2.setCustomValidity('Please Fill This Feild');
-        }
+        } else 
         if (passold.value == '') {
             passold.setCustomValidity('Please Fill This Feild');
+        } else 
+        if (pass1.value != pass2.value) {
+            pass1.setCustomValidity("Passwords Don't not match");
+        } else {
+            document.getElementById('editAcc').firstElementChild.submit();
         }
     }
-    if (pass1.value != pass2.value) {
-        pass1.setCustomValidity("Passwords Don't not match");
-    } else if ( pass1.value != '') {
-        document.getElementById('editAcc').querySelector('form').submit();
+    if ( pass1.value == '' && pass2.value == '' && passold.value == '') {
+        document.getElementById('editAcc').firstElementChild.submit();
     }
 }
 function transferHref(href) {
     document.getElementById('deleteHref').href = '/delete?id=' + href;
     document.getElementById('deleteModal').style.display = "flex";
+}
+document.getElementById('passold').addEventListener('keydown', function () {
+    this.type = "password";
+});
+function ajaxSearch(e) {
+    let defaults = `
+    <div class="result">
+        <img src="assets/images/loading.svg" class="loading" alt="">
+    </div>
+    `;
+    document.getElementById('searchTags').value = "";
+    document.getElementById('searchDrop').style.display = "flex";
+    document.getElementById('searchDrop').innerHTML = defaults;
+    if (e.value == '') {
+        document.getElementById('searchDrop').style.display = "none";
+    }
+    let search = e.value;
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            document.querySelector('#searchDrop').innerHTML = this.responseText;
+        }
+    };
+    setTimeout(() => {
+        xhttp.open("GET", "/search?search=" + search, true);
+        xhttp.send();
+    }, 500);
+    
+}
+function ajaxSearchTags(e) {
+    let defaults = `
+    <div class="result">
+        <img src="assets/images/loading.svg" class="loading" alt="">
+    </div>
+    `;
+    document.getElementById('search').value = "";
+    document.getElementById('searchDrop').style.display = "flex";
+    document.getElementById('searchDrop').innerHTML = defaults;
+    if (e.value == '') {
+        document.getElementById('searchDrop').style.display = "none";
+    }
+    let search = e.value;
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            document.querySelector('#searchDrop').innerHTML = this.responseText;
+        }
+    };
+    setTimeout(() => {
+        xhttp.open("GET", "/searchTag?search=" + search, true);
+        xhttp.send();
+    }, 500);
+    
+}
+function warning(choice) {
+    if (choice == 'account') {
+        document.getElementById('deleteAccount').style.display = "flex";
+    } else if (choice == 'wikis'){
+        document.getElementById('deleteWikis').style.display = "flex";
+    }
+    
 }

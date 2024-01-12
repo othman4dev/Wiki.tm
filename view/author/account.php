@@ -17,13 +17,19 @@
     <title>Welcome to Wiki.tm</title>
 </head>
 <body>
-    <header>
+<header>
         <div class="flex-center">
-            <img src="/assets/images/wikis.svg" alt="wiki.tm" class="logo-top">
+            <img src="assets/images/wikis.svg" alt="wiki.tm" class="logo-top">
             <h2>iki.tm</h2>
             <div class="search-div">
-                <input type="search" id="search" autocomplete="off" spellcheck="false" class="search" name="search" placeholder="Search Anything">
+                <input type="search" onkeyup="ajaxSearch(this)" id="search" autocomplete="off" spellcheck="false" class="search" name="search" placeholder="Search Anything">
+                <input type="search" onkeyup="ajaxSearchTags(this)" id="searchTags" autocomplete="off" spellcheck="false" class="search" name="search" placeholder="Search With Tags">
                 <i class="bi bi-search" style="cursor: pointer;"></i>
+            </div>
+            <div id="searchDrop">
+                <div class="result">
+                    <img src="assets/images/loading.svg" class="loading" alt="">
+                </div>
             </div>
         </div>
         <div class="account" onclick="showAccount()">
@@ -76,8 +82,8 @@
             <div class="card profile-card">
                 <h1 style="font-size: 70px;"><i class="bi bi-person-circle"></i></h1>
                 <div>
-                    <h2><?php echo $_SESSION['user']['name'] ?></h2>
-                    <p><?php echo $_SESSION['user']['email'] ?></p>
+                    <h2><?php echo $user['name'] ?></h2>
+                    <p><?php echo $user['email'] ?></p>
                 </div>
                 <div class="status">
                     <div class="stat">
@@ -85,12 +91,12 @@
                         <p><?=$data['user']['rowCount']?></p>
                     </div>
                     <div class="stat">
-                        <h3>Followers</h3>
-                        <p>0</p>
+                        <h3>Tags Used</h3>
+                        <p><?=$tagsCount[0]['total_tag_count']?></p>
                     </div>
                     <div class="stat">
-                        <h3>Following</h3>
-                        <p>0</p>
+                        <h3>Categories Used</h3>
+                        <p><?=$categoryCount[0]['rowCount']?></p>
                     </div>
                     <div class="stat">
                         <h3>Member Since</h3>
@@ -104,9 +110,9 @@
                     <div class="back" onclick="showWiki('show')">
                         Add A Wiki <i class="bi bi-plus-circle"></i>
                     </div>
-                    <div class="back" onclick="showAllWikis()">
+                    <a href="/myWikis"><div class="back">
                         My Wikis <i class="bi bi-wikipedia"></i></i>
-                    </div>
+                    </div></a>
                     <div class="back" onclick="showEdit()">
                         Edit My Account <i class="bi bi-pencil-square"></i>
                     </div>
@@ -225,17 +231,18 @@
         </div>
     </main>
     <div id="editAcc">
-        <form action="edit/account" onsubmit="return false;" method="post">
+        <form action="/edit/account" onsubmit="return false;" method="post">
             <h1>Edit You Account Info</h1>
+            <p style="width:100%">Change whatever you want, empty fields will not be changed *</p>
             <div class="columns">
                 <fieldset class="password-zone">
                     <legend><h2>Change Name Or Email</h2></legend>
                     <label><p class="moved">New Name</p><input class="inp-acc" placeholder="New Name" type="text" name="name"></label>
-                    <label><p class="moved">New Email</p><input class="inp-acc" placeholder="New Email" type="email" name="email"></label>
+                    <label><p class="moved">New Email</p><input class="inp-acc" placeholder="New Email" type="text" name="email"></label>
                 </fieldset>
                 <fieldset class="password-zone">
                     <legend><h2>Change Password</h2></legend>
-                    <label><p class="moved">Old Password</p><input class="inp-acc" placeholder="Old Password" type="text" name="old-password" id="passold"></label>
+                    <label><p class="moved">Old Password</p><input class="inp-acc" placeholder="Old Password" type="text" autocomplete="false" spellcheck="false" name="old-password" id="passold"></label>
                     <label><p class="moved">New Password</p><input class="inp-acc" placeholder="(As It is)" type="text" name="password" id="pass1"></label>
                     <label><p class="moved">Confirm New Password</p><input class="inp-acc" placeholder="(As It is)" type="text" name="password" id="pass2"></label>
                 </fieldset>
@@ -243,8 +250,8 @@
             <fieldset class="danger-zone">
                 <legend><h2>Danger Zone</h2></legend>
                 <div class="acc-danger">
-                    <button class="back danger" onclick="closeAcc()">Delete Account</button>
-                    <button class="back danger" onclick="submitAcc()">Delete All Wikis</button>
+                    <button class="back danger" onclick="warning('account')">Delete Account</button>
+                    <button class="back danger" onclick="warning('wikis')">Delete All Wikis</button>
                 </div>
             </fieldset>
             <div class="acc-btns">
@@ -259,6 +266,22 @@
             <div class="delete-btns">
                 <button class="back success" onclick="this.parentNode.parentNode.style.display = 'none'">Cancel</button>
                 <a href="/delete?id=" id="deleteHref"><button class="back danger">Delete</button></a>
+            </div>
+    </div>
+    <div id="deleteAccount">
+            <h1>Are You Sure ?</h1>
+            <p>Are you sure you want to delete this account permanently?</p>
+            <div class="delete-btns">
+                <button class="back success" onclick="this.parentNode.parentNode.style.display = 'none'">Cancel</button>
+                <a href="/deleteAcc" id="deleteHref"><button class="back danger">Delete</button></a>
+            </div>
+    </div>
+    <div id="deleteWikis">
+            <h1>Are You Sure ?</h1>
+            <p>Are you sure you want to delete all wiki in this account permanently?</p>
+            <div class="delete-btns">
+                <button class="back success" onclick="this.parentNode.parentNode.style.display = 'none'">Cancel</button>
+                <a href="/deleteAll" id="deleteHref"><button class="back danger">Delete</button></a>
             </div>
     </div>
 </body>

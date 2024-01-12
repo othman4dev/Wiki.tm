@@ -27,8 +27,14 @@ $routes->post('/register/verify', LoginController::class, 'register');
 $routes->get('/wiki', HomeController::class, 'wiki');
 $routes->post('/wiki/add', AuthorController::class, 'createWiki');
 $routes->get('/edit' , AuthorController::class, 'editWiki');
+$routes->post('/edit/account' , AuthorController::class, 'editAccount');
 $routes->post('/update', AuthorController::class, 'updateWiki');
 $routes->get('/delete', AuthorController::class, 'deleteWiki');
+$routes->get('/error' , HomeController::class, 'error');
+$routes->get('/404' , HomeController::class, 'notFound');
+$routes->get('/myWikis' , HomeController::class, 'wikis');
+$routes->get('/search' , HomeController::class, 'search');
+$routes->get('/searchTag' , HomeController::class, 'searchTag');
 
 $routes->dispatch();
 

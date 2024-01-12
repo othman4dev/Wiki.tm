@@ -23,6 +23,8 @@
             $data['tags'] = HomeModel::getTags();
             $data['wikis'] = AuthorModel::getAuthor();
             $data['same'] = HomeModel::getSameAuthor($_SESSION['user']['id']);
+            $data['tagsCount'] = HomeModel::getTagsCount();
+            $data['categoryCount'] = HomeModel::getCategoryCount();
             $this->view('author/account', $data);
         }
         public function category() {
@@ -65,5 +67,30 @@
             $data['tags'] = HomeModel::getTags();
             $data['allTags'] = AuthorModel::getTags();
             $this->view('author/wiki', $data);
+        }
+        public function error() {
+            $this->view('error');
+        }
+        public function notFound() {
+            $this->view('404');
+        }
+        public function wikis() {
+            $data['user'] = UserModel::userInfo();
+            $data['category'] = AuthorModel::getCategory();
+            $data['allTags'] = AuthorModel::getTags();
+            $data['tags'] = HomeModel::getTags();
+            $data['wikis'] = AuthorModel::getAuthor();
+            $data['same'] = HomeModel::getSameAuthorAll($_SESSION['user']['id']);
+            $data['tagsCount'] = HomeModel::getTagsCount();
+            $data['categoryCount'] = HomeModel::getCategoryCount();
+            $this->view('author/wikis', $data);
+        }
+        public function search() {
+            $data['wikis'] = HomeModel::search($_GET['search']);
+            echo $data['wikis'];
+        }
+        public function searchTag() {
+            $data['wikis'] = HomeModel::searchTag($_GET['search']);
+            echo $data['wikis'];
         }
     }

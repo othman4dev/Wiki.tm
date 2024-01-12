@@ -482,14 +482,22 @@ main {
     color: #fff;
     padding: 5px;
 }
+.edit-btn:hover {
+    background-color: #0078b4;
+    cursor: pointer;
+}
 .delete-btn {
-    background-color: #dc0000;
+    background-color: #ff0000;
     height: 30px;
     border: none;
     border-radius: 5px;
     font-size: 15px;
     color: #fff;
     padding: 5px;
+}
+.delete-btn:hover {
+    background-color: #dc0000;
+    cursor: pointer;
 }
 .card-btn {
     display: flex;
@@ -627,7 +635,46 @@ legend {
     border-radius: 5px;
     height: 200px;
     width: 400px;
+    display: none;
+    z-index: 999;
+}
+#deleteAccount {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-evenly;
+    position: fixed;
+    gap: 15px;
+    box-shadow: 0 0 5000px 500px #00000020;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%,-50%);
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    height: 200px;
+    width: 400px;
     display: none; 
+    z-index: 999;
+}
+#deleteWikis {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-evenly;
+    position: fixed;
+    gap: 15px;
+    box-shadow: 0 0 5000px 500px #00000020;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%,-50%);
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    height: 200px;
+    width: 400px;
+    display: none;
+    z-index: 999;
 }
 .delete-btns {
     display: flex;
@@ -640,4 +687,65 @@ legend {
     border: none;
     outline: none;
     cursor: pointer;
+}
+.wrap {
+    flex-wrap: wrap;
+}
+.wrap .fixed {
+    width: 32%;
+}
+#searchDrop {
+    position: absolute;
+    top: 60px;
+    left: 240px;
+    background-color:  #fff;
+    border-radius: 5px;
+    box-shadow: #00000020 0 0 8px -1px;
+    min-height: 100px;
+    width: 550px;
+    display: flex;
+    flex-direction: column;
+    display: none;
+}
+.result {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 15px;
+    padding: 15px;
+}
+.loading {
+    mix-blend-mode: hard-light;
+}
+.title-img {
+    border-radius: 50%;
+    background-color: #0091dc;
+    color: #fff;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+    font-weight: bold;
+}
+.title-result {
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+    flex-grow: 1;
+    align-items: start;
+    justify-content: flex-start;
+}
+.category-result {
+    font-size: 15px;
+}
+.result .tags {
+    font-size: 15px;
+}
+#search::placeholder {
+    color: #0091dc;
+}
+#searchTags::placeholder {
+    color: #0091dc;
 }

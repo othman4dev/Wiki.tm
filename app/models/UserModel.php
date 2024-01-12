@@ -54,4 +54,23 @@
             $user = $stmt->fetch();
             return $user;
         }
+        public static function updatePassword($password) {
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+            $sql = "UPDATE user SET password = ? WHERE id = ?";
+            $stmt = connection::connect()->prepare($sql);
+            $stmt->execute([$hashedPassword, $_SESSION['user']['id']]);
+            return true;
+        }
+        public static function updateName($name) {
+            $sql = "UPDATE user SET name = ? WHERE id = ?";
+            $stmt = connection::connect()->prepare($sql);
+            $stmt->execute([$name, $_SESSION['user']['id']]);
+            return true;
+        }
+        public static function updateEmail($email) {
+            $sql = "UPDATE user SET email = ? WHERE id = ?";
+            $stmt = connection::connect()->prepare($sql);
+            $stmt->execute([$email, $_SESSION['user']['id']]);
+            return true;
+        }
     }

@@ -28,8 +28,14 @@
             <img src="assets/images/wikis.svg" alt="wiki.tm" class="logo-top">
             <h2>iki.tm</h2>
             <div class="search-div">
-                <input type="search" id="search" autocomplete="off" spellcheck="false" class="search" name="search" placeholder="Search Anything">
+                <input type="search" onkeyup="ajaxSearch(this)" id="search" autocomplete="off" spellcheck="false" class="search" name="search" placeholder="Search Anything">
+                <input type="search" onkeyup="ajaxSearchTags(this)" id="searchTags" autocomplete="off" spellcheck="false" class="search" name="search" placeholder="Search With Tags">
                 <i class="bi bi-search" style="cursor: pointer;"></i>
+            </div>
+            <div id="searchDrop">
+                <div class="result">
+                    <img src="assets/images/loading.svg" class="loading" alt="">
+                </div>
             </div>
         </div>
         <div class="account" onclick="showAccount()">
