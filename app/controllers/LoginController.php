@@ -1,41 +1,42 @@
 <?php
 
-    namespace app;
+    namespace App\controllers;
 
-    use app\Models\User;
-    use app\routes\controller;
+    use App\models\UserModel;
+    use App\Controller;
 
-    class Login {
-        public function index() {
-            $this->view('login');
+    class LoginController {
+        public static function index() {
+            Controller->view('/login');
         }
-        public function login() {
+        public static function login() {
             $email = $_POST['email'];
             $password = $_POST['password'];
-            $user = User::login($email, $password);
-            if ($user && $user['role'] === 'author') {
+            $user = UserModel::login($email, $password);
+            if ($user && $user['role'] === 'user') {
                 $_SESSION['user'] = $user;
-                $this->view('author/home');
+                header('Location: /home');
             } else if ($user && $user['role'] === 'admin') {
                 $_SESSION['user'] = $user;
-                $this->view('admin/home');
+                header('Location: /admin/home');
             } else {
-                $this->view('login?error=1');
+                header('Location: /login/error');
             }
         }
-        public function register() {
+        public static function register() {
             $email = $_POST['email'];
             $password = $_POST['password'];
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             $name = $_POST['name'];
-            $user = User::register($email, $password, $name);
+            $user = UserModel::register($email, $hashedPassword, $name);
             if ($user) {
-                $this->view('author/home');
+                header('Location: /login');
             } else {
-                $this->view('register?error=1');
+                header('Location: /login/error');
             }
         }
-        public function logout() {
+        public static function logout() {
             session_destroy();
-            header('location: /');
+            header('Location: /login');
         }
     }

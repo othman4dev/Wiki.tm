@@ -1,27 +1,30 @@
+<?php
+    extract($data);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../public/assets/style/style.css">
+    <link rel="stylesheet" href="/assets/style/style.css">
     <link href="https://fonts.cdnfonts.com/css/montserrat" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="shortcut icon" href="../../public/assets/images/favicon.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="/assets/images/favicon.svg" type="image/x-icon">
     <title>Welcome to Wiki.tm</title>
 </head>
 <body>
     <header>
         <div class="flex-center">
-            <img src="../../public/assets/images/wikis.svg" alt="wiki.tm" class="logo-top">
+            <img src="/assets/images/wikis.svg" alt="wiki.tm" class="logo-top">
             <h2>iki.tm</h2>
             <div class="search-div">
-                <input type="text" class="search" name="search" placeholder="Search">
+                <input type="search" id="search" autocomplete="off" spellcheck="false" class="search" name="search" placeholder="Search Anything">
                 <i class="bi bi-search" style="cursor: pointer;"></i>
             </div>
         </div>
         <div class="account" onclick="showAccount()">
             <i class="bi bi-person-circle"></i>
-            <span style="font-size: 20px;">Account</span>
+            <span style="font-size: 20px;"><?php echo $_SESSION['user']['name'] ?></span>
             <i class="bi bi-caret-down" style="font-size: 15px;"></i>
         </div>
         <div class="account-down" id="accDown">
@@ -29,24 +32,25 @@
                 <div class="account-all">
                     <i class="bi bi-person-circle"></i>
                     <div class="account-info-text">
-                        <p class="username">Username</p>
-                        <p class="mail">example@email.com</p>
+                        <p class="username"><?php echo $_SESSION['user']['name'] ?></p>
+                        <p class="mail"><?php echo $_SESSION['user']['email'] ?></p>
                     </div>
                 </div>
-                <a href="account.php">
+                <a onclick="redirect('accounts')">
                     <li class="account-btn"><i class="bi bi-person"></i>Account</li>
                 </a>
-                <a href="../login.php">
+                <a href="/logout">
                     <li class="account-btn"><i class="bi bi-box-arrow-left"></i>Logout</li>
                 </a>
             </div>
         </div>
     </header>
     <main>
-        <div class="left-side">
+    <div class="left-side">
             <h4 class="subs">General</h4>
             <div class="category">
-                <a onclick="redirect('home')"><li class="current home"><i class="bi bi-table"></i> &nbsp; Dashboard</li></a>
+                <a onclick="redirect('home')"><li class="home"><i class="bi bi-table"></i> &nbsp; Dashboard</li></a>
+                <a onclick="redirect('accounts')"><li class="accounts"><i class="bi bi-person-circle"></i> &nbsp; Account</li></a>
             </div>
             <h4 class="subs">Categories</h4>
             <div class="category">
@@ -63,45 +67,77 @@
         </div>
         <div class="main">
             <div class="card-inv">
-                <h1>Wiki's Title</h1>
-                <p>Wiki's category</p>
+                <h1><?=$wikis['title']?></h1>
+                <p><?=$wikis['category']?></p>
             </div>
             <div class="card big">
                 <h2 style="display: flex;align-items: center;gap: 15px;">
                     <div class="image-wiki">
                         <div>
-                            BE
+                            <?php
+                                echo strtoupper(substr($wikis['title'], 0, 2));
+                            ?>
                         </div>
                     </div>
-                    Best Cars Manifacturers
+                    <?=$wikis['title']?>
                 </h2>
                 <p class="des">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    <?=$wikis['description']?>
                 </p>
-                <div class="tags">
-                    <span># tag1</span>
-                    <span># tag1</span>
-                    <span># tag1</span>
-                </div>
-                <article>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo autem, earum ullam nihil possimus eius aliquid nostrum quisquam laudantium sed quasi. Fugit libero dolore repellat delectus cum expedita fugiat nobis.
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo autem, earum ullam nihil possimus eius aliquid nostrum quisquam laudantium sed quasi. Fugit libero dolore repellat delectus cum expedita fugiat nobis.
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo autem, earum ullam nihil possimus eius aliquid nostrum quisquam laudantium sed quasi. Fugit libero dolore repellat delectus cum expedita fugiat nobis.
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo autem, earum ullam nihil possimus eius aliquid nostrum quisquam laudantium sed quasi. Fugit libero dolore repellat delectus cum expedita fugiat nobis.
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo autem, earum ullam nihil possimus eius aliquid nostrum quisquam laudantium sed quasi. Fugit libero dolore repellat delectus cum expedita fugiat nobis.
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo autem, earum ullam nihil possimus eius aliquid nostrum quisquam laudantium sed quasi. Fugit libero dolore repellat delectus cum expedita fugiat nobis.
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo autem, earum ullam nihil possimus eius aliquid nostrum quisquam laudantium sed quasi. Fugit libero dolore repellat delectus cum expedita fugiat nobis.
-
+                    <div class="tags">
+                    <?php
+                            foreach ($tags as $tag) {
+                                if ($tag['wiki_id'] == $wikis['wiki_id']) {
+                                    echo '<span># ' . $tag['name'] . '</span>';
+                                }
+                            }
+                            echo '<span class="category-wiki">' . $wikis['category_name'] . '</span>';
+                            echo '<span class="words-count">' . str_word_count($wikis['body']) . ' Words' . '</span>';
+                            echo '<span class="date-wiki">' . date('d M Y', strtotime($wikis['created_at'])) . '</span>';
+                        ?> 
+                        </div>
+                <article class="body-article">
+                    <?=$wikis['body'] ?>
                 </article>
             </div>
             <div class="card-inv"><h1>Same Author :</h1></div>
             <div class="card-2">
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
+                <?php
+                    foreach ($same as $sameWiki) {
+                        echo '<div class="card fixed">
+                        <a href="/wiki?id='.$sameWiki['wiki_id'].'" >
+                        <h2 style="display: flex;align-items: center;gap: 15px;">
+                            <div class="image-wiki">
+                                <div>
+                                    '.strtoupper(substr($sameWiki['title'], 0, 2)).'
+                                </div>
+                            </div>
+                            '.$sameWiki['title'].'
+                        </h2></a>
+                        <p class="des">
+                            '.$sameWiki['description'].'
+                        </p>
+                        <div class="tags">';?> 
+                            <?php
+                                foreach ($tags as $tag) {
+                                    if ($tag['wiki_id'] == $sameWiki['wiki_id']) {
+                                        echo '<span># ' . $tag['name'] . '</span>';
+                                    }
+                                }
+                                echo '<span class="category-wiki">' . $sameWiki['category_name'] . '</span>';
+                                echo '<span class="words-count">' . str_word_count($sameWiki['body']) . ' Words' . '</span>';
+                                echo '<span class="date-wiki">' . date('d M Y', strtotime($sameWiki['created_at'])) . '</span>';
+                            ?> 
+                            <?php echo '
+                        </div></div>';
+                    }
+                
+                
+                ?>
+            
             </div>
             <div class="card-inv">
-                <a href="home.php">
+                <a href="home">
                     <button class="back">
                         <i class="bi bi-caret-left-fill"></i> Back to dashboard
                     </button>
@@ -119,4 +155,4 @@
     
 </body>
 </html>
-<script src="../../public/assets/script/script.js"></script>
+<script src="/assets/script/script.js"></script>

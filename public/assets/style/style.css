@@ -1,8 +1,9 @@
+
 * {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-    font-family: 'Montserrat';
+    font-family: 'Montserrat regular';
 }
 a {
     text-decoration: none;
@@ -45,6 +46,7 @@ main {
     display: flex;
     gap: 15px;
     padding-right: 15px;
+    min-height: 100%;
 }
 .left-side {
     width: 30%;
@@ -138,6 +140,16 @@ main {
 }
 .des {
     max-width: 100%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    word-wrap: break-word;
+}
+.fixed {
+    max-width: 33% !important;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-evenly;
 }
 .card-inv {
     background-color: transparent;
@@ -146,7 +158,6 @@ main {
 }
 .logo-top {
     width: 80px;
-    margin-top: -40px;
 }
 .flex-center {
     display: flex;
@@ -288,7 +299,7 @@ main {
     color: #0091dc;
 }
 .big {
-    height: 80vh;
+    height: fit-content;
 }
 .back {
     background-color: #0091dc;
@@ -386,10 +397,247 @@ main {
 .image-wiki {
     background-color: #0091dc;
     border-radius: 50%;
-    height: 50px;
-    width: 50px;
+    min-height: 50px;
+    min-width: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #fff;
+}
+.body-article {
+    padding: 7px;
+    margin-top: 15px;
+    text-indent: 15px;
+    max-width: 100%;
+}
+.body-article p {
+    word-wrap: break-word;
+}
+.body-article img {
+    margin: 15px;
+}
+.words-count {
+    background-color: #10ff842d !important;
+    color: #00ae0f !important;
+}
+.date-wiki {
+    background-color: #c310ff2d !important;
+    color: #c310ff !important;
+}
+.category-wiki {
+    background-color: #ff10102d !important;
+    color: #ff1010 !important;
+}
+#modelSuccess {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    padding: 15px;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 5000px 500px #00000020;
+}
+.close {
+    background-color: #0091dc;
+    color: #fff;
+    height: 40px;
+    width: 80px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.model-buttons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    justify-content: center;
+    width: 100%;
+}
+.wiki-text {
+    height: 250px;
+    width: 100%;
+    min-width: 500px;
+    padding: 15px;
+    font-size: 15px;
+    outline: none;
+    border-radius: 5px;
+    border: solid rgb(90, 93, 121) 1.5px;
+}
+.wiki-form {
+    width: 100%;
+    flex-grow: 1;
+}
+.edit-btn {
+    background-color: #0091dc;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+    color: #fff;
+    padding: 5px;
+}
+.delete-btn {
+    background-color: #dc0000;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+    color: #fff;
+    padding: 5px;
+}
+.card-btn {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding-right: 15px;
+    padding-top: 15px;
+    gap: 10px;
+}
+.account-options {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+}
+.slim {
+    height: fit-content !important;
+    min-height: unset;
+}
+#editAcc {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%,-50%);
+    background-color: #fff;
+    width: 60%;
+    max-width: 1000px;
+    max-height: 90vh;
+    overflow-y: scroll;
+    min-width: 300px;
+    display: flex;
+    border-radius: 5px;
+    box-shadow: 0 0 5000px 500px #00000020;
+    padding: 15px;
+    padding-inline: 25px;
+    display: none;
+    z-index: 99;
+}
+#editAcc::-webkit-scrollbar {
+    width: 10px;
+}
+#editAcc::-webkit-scrollbar-thumb {
+    background-color: #0091dc;
+    border-radius: 50px;
+}
+#editAcc form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+#editAcc form label {
+    flex-grow: 1;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+#editAcc .moved {
+    width: 100%;
+    margin-bottom: 5px;
+}
+.inp-acc {
+    flex-grow: 1;
+    height: 40px;
+    outline: none;
+    border: solid 1.5px rgb(90, 93, 121);
+    padding-left: 15px;
+    font-size: 17px;
+    border-radius: 5px;
+}
+.acc-btns {
+    display: flex;
+    gap: 20px;
+    padding: 15px;
+    justify-content: end;
+    width: 100%;
+}
+.back:hover {
+    background-color: #0078b4;
+}
+.acc-danger {
+    display: flex;
+    gap: 20px;
+    padding: 15px;
+    justify-content: space-evenly;
+    width: 100%;
+}
+.danger {
+    background-color: #ff0000;
+    color: #fff;
+}
+.danger:hover {
+    background-color: #dc0000;
+}
+.success {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.danger-zone {
+    flex-grow: 1;
+    border: solid 1.5px rgb(90, 93, 121);
+    border-radius: 5px;
+}
+.password-zone {
+    flex-grow: 1;
+    border: solid 1.5px rgb(90, 93, 121);
+    border-radius: 5px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+legend {
+    margin-left: 15px;
+    padding: 15px;
+}
+.columns {
+    display: flex;
+    flex-grow: 1;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+#deleteModal {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-evenly;
+    position: fixed;
+    gap: 15px;
+    box-shadow: 0 0 5000px 500px #00000020;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%,-50%);
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    height: 200px;
+    width: 400px;
+    display: none; 
+}
+.delete-btns {
+    display: flex;
+    gap: 15px;
+    justify-content: end;
+}
+.delete-btns button {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    cursor: pointer;
 }

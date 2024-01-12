@@ -70,58 +70,17 @@
             </div>
         </div>
         <div class="main">
-            <div class="card-inv">
-                <h1>Profile</h1>
-            </div>
-            <div class="card profile-card">
-                <h1 style="font-size: 70px;"><i class="bi bi-person-circle"></i></h1>
-                <div>
-                    <h2><?php echo $_SESSION['user']['name'] ?></h2>
-                    <p><?php echo $_SESSION['user']['email'] ?></p>
-                </div>
-                <div class="status">
-                    <div class="stat">
-                        <h3>Wikis</h3>
-                        <p><?=$data['user']['rowCount']?></p>
-                    </div>
-                    <div class="stat">
-                        <h3>Followers</h3>
-                        <p>0</p>
-                    </div>
-                    <div class="stat">
-                        <h3>Following</h3>
-                        <p>0</p>
-                    </div>
-                    <div class="stat">
-                        <h3>Member Since</h3>
-                        <?= date('Y-m-d', strtotime($data['user']['created_at'])) ?>
-                    </div>
-                </div>
-            </div>
-            <div class="card slim" style="justify-content: space-between;align-items: center;">
-                <h1>What do you have in mind ?</h1>
-                <div class="account-options">
-                    <div class="back" onclick="showWiki('show')">
-                        Add A Wiki <i class="bi bi-plus-circle"></i>
-                    </div>
-                    <div class="back" onclick="showAllWikis()">
-                        My Wikis <i class="bi bi-wikipedia"></i></i>
-                    </div>
-                    <div class="back" onclick="showEdit()">
-                        Edit My Account <i class="bi bi-pencil-square"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="card wiki-in" id="wikiModal">
-                <form action="/wiki/add" method="post" style="gap: 10px;" class="wiki-form">
+            <div class="card wiki-in" id="editModal">
+                <form action="/update" method="post" style="gap: 10px;" class="wiki-form" onsubmit="return false;">
+                <input type="text"  value="<?=$_GET['id']?>" style="display:none;" name="id">
                     <i class="bi bi-x-lg" id="ex" onclick="showWiki('hide')"></i>
                     <label class="label-title">
                         <p class="moved">Title</p>
-                        <input type="text" name="title" class="wiki-inp" placeholder="Wiki's Title" required>
+                        <input type="text" name="title" class="wiki-inp" placeholder="Wiki's Title" required value="<?=$wiki['title']?>">
                     </label>
                     <label class="label-title">
                         <p class="moved">Description</p>
-                        <input type="text" name="description" class="wiki-inp" placeholder="Wiki's Description" required>
+                        <input type="text" name="description" class="wiki-inp" placeholder="Wiki's Description" value="<?=$wiki['description']?>" required>
                     </label>
                     <script>
                         tinymce.init({
@@ -139,14 +98,18 @@
                       </script>
                       <label class="label-title">
                         <p class="moved">Body</p>
-                        <textarea name="body" class="wiki-text" placeholder="Wiki's Body" required></textarea>
+                        <textarea name="body" class="wiki-text" placeholder="Wiki's Body" required ><?=$wiki['body']?></textarea>
                       </label>
                     <div class="selects">
                         <label>Category
                             <select class="select-category" style="width: 100%;height: 50px;" name="category" required>
                                 <?php
                                     foreach($data['category'] as $category) {
-                                        echo '<option value="'.$category['id'].'"> '.$category['name'].'</option>';
+                                        if ($category['id'] == $wiki['category_id']) {
+                                            echo '<option value="'.$category['id'].'" selected> '.$category['name'].'</option>';
+                                        } else {
+                                            echo '<option value="'.$category['id'].'"> '.$category['name'].'</option>';
+                                        }
                                     }
                                 ?>
                             </select>
@@ -154,24 +117,34 @@
                         <label for="">Tags
                             <select class="select-tags-" multiple="multiple" style="width: 100%;height: 50px;" name="tags" id="tags-select" onchange="retreiveData(this)">
                                 <?php
-                                    foreach($data['allTags'] as $allTag) {
-                                        echo '<option value="'.$allTag['id'].'"> '.$allTag['name'].'</option>';
+                                foreach ($tags as $tag) {
+                                    if ($tag['wiki_id'] == $wiki['wiki_id']) {
+                                        echo '<option value="'.$tag['tag_id'].'" selected> '.$tag['name'].'</option>';
                                     }
+                                }
+                                foreach ($allTags as $allTag) {
+                                    echo '<option value="'.$allTag['id'].'"> '.$allTag['name'].'</option>';
+                                }
                                 ?>
                             </select>
                             <input type="text" style="display:none" name="tags-json" id="tags-json">
                         </label>
                     </div>
                     <div class="card-2" style="justify-content: end;margin: 20px;padding-right: 50px;">
+                        <a href="/account" onclick="redirect('accounts')">
+                            <button class="back">
+                            <i class="bi bi-arrow-left-square-fill"></i> Cancel
+                            </button>
+                        </a>
                         <button class="back" type="submit" onclick="this.parentNode.parentNode.submit()">
-                            Post <i class="bi bi-arrow-right-square-fill"></i>
+                            Save <i class="bi bi-arrow-right-square-fill"></i>
                         </button>
                     </div>
                 </form>
             </div>
             <div class="card-inv"><h1>Your Work :</h1></div>
             <div class="card-2">
-                <?php
+            <?php
                     foreach ($same as $sameWiki) {
                         echo '<div class="card fixed">
                         <a href="/wiki?id='.$sameWiki['wiki_id'].'" >
@@ -200,8 +173,8 @@
                             <?php echo '
                         </div>
                         <div class="card-btn">
-                            <button onclick="transferHref('.$sameWiki['wiki_id'].')" class="delete-btn">Delete <i class="bi bi-trash"></i></button></a>
-                            <a href="/edit?id='.$sameWiki['wiki_id'].'"><button class="edit-btn">Edit <i class="bi bi-pencil-square"></i></button></a>
+                            <a href="/delete?id='.$sameWiki['wiki_id'].'"<button class="delete-btn">Delete <i class="bi bi-trash"></i></button></a>
+                            <a href="/edit?id='.$sameWiki['wiki_id'].'"<button class="edit-btn">Edit <i class="bi bi-pencil-square"></i></button></a>
                         </div>
                         
                         </div>';
@@ -224,43 +197,7 @@
             </div>
         </div>
     </main>
-    <div id="editAcc">
-        <form action="edit/account" onsubmit="return false;" method="post">
-            <h1>Edit You Account Info</h1>
-            <div class="columns">
-                <fieldset class="password-zone">
-                    <legend><h2>Change Name Or Email</h2></legend>
-                    <label><p class="moved">New Name</p><input class="inp-acc" placeholder="New Name" type="text" name="name"></label>
-                    <label><p class="moved">New Email</p><input class="inp-acc" placeholder="New Email" type="email" name="email"></label>
-                </fieldset>
-                <fieldset class="password-zone">
-                    <legend><h2>Change Password</h2></legend>
-                    <label><p class="moved">Old Password</p><input class="inp-acc" placeholder="Old Password" type="text" name="old-password" id="passold"></label>
-                    <label><p class="moved">New Password</p><input class="inp-acc" placeholder="(As It is)" type="text" name="password" id="pass1"></label>
-                    <label><p class="moved">Confirm New Password</p><input class="inp-acc" placeholder="(As It is)" type="text" name="password" id="pass2"></label>
-                </fieldset>
-            </div>
-            <fieldset class="danger-zone">
-                <legend><h2>Danger Zone</h2></legend>
-                <div class="acc-danger">
-                    <button class="back danger" onclick="closeAcc()">Delete Account</button>
-                    <button class="back danger" onclick="submitAcc()">Delete All Wikis</button>
-                </div>
-            </fieldset>
-            <div class="acc-btns">
-                <button class="back success" onclick="closeAcc()">Cancel</button>
-                <button class="back success" type="submit" onclick="submitAcc()">Save Changes</button>
-            </div>
-        </form>
-    </div>
-    <div id="deleteModal">
-            <h1>Are You Sure ?</h1>
-            <p>Are you sure you want to delete this wiki ?</p>
-            <div class="delete-btns">
-                <button class="back success" onclick="this.parentNode.parentNode.style.display = 'none'">Cancel</button>
-                <a href="/delete?id=" id="deleteHref"><button class="back danger">Delete</button></a>
-            </div>
-    </div>
+    
 </body>
 </html>
 <script>
@@ -288,4 +225,5 @@
         document.getElementById('tags-json').value = JSON.stringify(tags);
         console.log(document.getElementById('tags-json').value);
     }
+    retreiveData(document.getElementById('tags-select'));
 </script>

@@ -6,7 +6,7 @@ let sideForm1 = `
     <form onsubmit="return false;">
         <h1 class="white">Welcome To Wiki.tm</h1>
         <div class="bg-white">
-            <img src="../public/assets/images/wikis.svg" alt=""><h1>iki.tm</h1>
+            <img class="logo-middle" style="height:50px;margin-top:0px" src="/assets/images/wikis.svg" alt=""><h1>iki.tm</h1>
         </div>
         <p class="white">Don't have an Account ? .Sign Up Now !</p>
         <button class="sign-up" onclick="toggleAuth(0)">
@@ -20,7 +20,7 @@ let sideForm2 = `
     <form onsubmit="return false;">
         <h1 class="white">Welcome To Wiki.tm</h1>
         <div class="bg-white">
-            <img src="../public/assets/images/wikis.svg" alt=""><h1>iki.tm</h1>
+            <img class="logo-middle" style="height:50px;margin-top:0px" src="/assets/images/wikis.svg" alt=""><h1>iki.tm</h1>
         </div>
         <p class="white">Already have an Account ? .Login Now !</p>
         <button class="sign-up" onclick="toggleAuth(1)">
@@ -30,7 +30,7 @@ let sideForm2 = `
 </div>
 `;
 let login = `
-<form action="../public/index.php?route=login" method="post" class="ini-form">
+<form action="/login/verify" method="post" class="ini-form">
     <div class="login-header">
         <i class="bi bi-person-circle" style="font-size: 48px;"></i>
         <h2>Login</h2>
@@ -48,7 +48,7 @@ let login = `
 </form>
 `;
 let register = `
-<form action="../public/index.php?route=register" method="post"  onsubmit="return false;" class="ini-form">
+<form action="/register/verify" method="post"  onsubmit="return false;" class="ini-form">
     <div class="login-header">
         <i class="bi bi-person-circle" style="font-size: 48px;"></i>
         <h2>Register</h2>
@@ -177,10 +177,12 @@ function redirect(e) {
 }
 function goTo(e) {
     if (e == 'home') {
-        window.location.href = "home.php";
+        window.location.href = "/home";
+    } else if (e == 'accounts') {
+        window.location.href = "/account";
     } else {
         console.log(e);
-        window.location.href = "category.php?category=" + e;
+        window.location.href = "/category/" + e;
     }
 }
 function showAccount() {
@@ -233,4 +235,35 @@ function showWiki(option) {
     } else {
         document.getElementById("wikiModal").style.display = "none";
     }
+}
+function closeAcc() {
+    document.getElementById('editAcc').style.display = "none";
+}
+function showEdit() {
+    document.getElementById('editAcc').style.display = "flex";
+}
+function submitAcc() {
+    let pass1 = document.getElementById('pass1');
+    let pass2 = document.getElementById('pass2');
+    let passold = document.getElementById('passold');
+    if (pass1.value != '' || pass2.value != ''|| passold.value != ''){
+        if (pass1.value =='') {
+            pass1.setCustomValidity('Please Fill This Feild');
+        }
+        if (pass2.value == '') {
+            pass2.setCustomValidity('Please Fill This Feild');
+        }
+        if (passold.value == '') {
+            passold.setCustomValidity('Please Fill This Feild');
+        }
+    }
+    if (pass1.value != pass2.value) {
+        pass1.setCustomValidity("Passwords Don't not match");
+    } else if ( pass1.value != '') {
+        document.getElementById('editAcc').querySelector('form').submit();
+    }
+}
+function transferHref(href) {
+    document.getElementById('deleteHref').href = '/delete?id=' + href;
+    document.getElementById('deleteModal').style.display = "flex";
 }

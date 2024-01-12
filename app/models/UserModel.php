@@ -1,10 +1,10 @@
 <?php
 
-    namespace app\models\user;
+    namespace App\models;
 
-    use app\models\connection;
+    use App\models\connection;
 
-    class User {
+    class UserModel {
 
         public $id;
 
@@ -24,14 +24,18 @@
             $this->role = $role;
         }
         public static function login($email, $password) {
-            $sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+            $sql = "SELECT * FROM user WHERE email = ?";
             $stmt = connection::connect()->prepare($sql);
-            $stmt->execute([$email, $password]);
+            $stmt->execute([$email]);
             $user = $stmt->fetch();
-            return $user;
+            if (password_verify($password, $user['password'])) {
+                return $user;
+            } else {
+                return false;
+            }
         }
         public static function register($email, $password, $name) {
-            $sql = "INSERT INTO users (email, password, name) VALUES (?, ?, ?)";
+            $sql = "INSERT INTO user (email, password, name) VALUES (?, ?, ?)";
             $stmt = connection::connect()->prepare($sql);
             $stmt->execute([$email, $password, $name]);
             return true;
@@ -43,10 +47,10 @@
             $wiki = $stmt->fetch();
             return $wiki;
         }
-        public static function account($userID) {
-            $sql = "SELECT * FROM users RIGHT JOIN wikis ON user.id = wikis.user_id WHERE id = ?";
+        public static function userInfo() {
+            $sql = "SELECT *, wikis.id as wikiID, COUNT(*) as rowCount FROM user RIGHT JOIN wikis ON user.id = wikis.author_id WHERE user.id = ?";
             $stmt = connection::connect()->prepare($sql);
-            $stmt->execute([$userID]);
+            $stmt->execute([$_SESSION['user']['id']]);
             $user = $stmt->fetch();
             return $user;
         }

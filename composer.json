@@ -2,7 +2,7 @@
     "name": "youcode/wiki.tm",
     "autoload": {
         "psr-4": {
-            "Youcode\\WikiTm\\": "src/"
+            "App\\": "app/"
         }
     },
     "authors": [
@@ -11,5 +11,7 @@
             "email": "othmandevsup@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
 }

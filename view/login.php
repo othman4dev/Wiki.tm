@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../public/assets/style/style.css">
-    <link rel="stylesheet" href="../public/assets/style/login.css">
+    <link rel="stylesheet" href="/assets/style/style.css">
+    <link rel="stylesheet" href="/assets/style/login.css">
     <link href="https://fonts.cdnfonts.com/css/montserrat" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="shortcut icon" href="../public/assets/images/favicon.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="/assets/images/favicon.svg" type="image/x-icon">
     <title>Welcome to Wiki.tm</title>
 </head>
 <body>
     <header>
         <div class="flex-center">
-            <img src="../public/assets/images/wikis.svg" alt="wiki.tm" class="logo-top">
+            <img src="/assets/images/wikis.svg" alt="wiki.tm" class="logo-top">
             <h2>iki.tm</h2>
         </div>
     </header>
     <main class="main-login">
         <div class="auth">
             <div class="login">
-                <form action="../public/index.php?route=login" method="post" class="ini-form">
+                <form action="/login/verify" method="post" class="ini-form">
                     <div class="login-header">
                         <i class="bi bi-person-circle" style="font-size: 48px;"></i>
                         <h2>Login</h2>
@@ -41,7 +41,7 @@
                 <form onsubmit="return false;">
                     <h1 class="white">Welcome To Wiki.tm</h1>
                     <div class="bg-white">
-                        <img src="../public/assets/images/wikis.svg" alt=""><h1>iki.tm</h1>
+                        <img class="logo-middle" style="height:50px;margin-top:0px" src="/assets/images/wikis.svg" alt=""><h1>iki.tm</h1>
                     </div>
                     <p class="white">Don't have an Account ?. Sign Up Now !</p>
                     <button class="sign-up" onclick="toggleAuth(2)">
@@ -54,7 +54,7 @@
     <footer>
         <div class="footer">
             <div class="footer-left">
-                <img src="../public/assets/images/wikis.svg" alt="wiki.tm" class="logo" style="height: 50px;transform: translateY(-14px);">
+                <img src="/assets/images/wikis.svg" alt="wiki.tm" class="logo" style="height: 30px;">
                 <h2>iki.tm</h2>
             </div>
             <div class="footer-right">
@@ -62,4 +62,4 @@
             </div>
     </footer>
 </body>
-<script src="../public/assets/script/script.js"></script>
+<script src="/assets/script/script.js"></script>
