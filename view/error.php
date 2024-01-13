@@ -30,7 +30,7 @@
     <div class="error-message">
         <h1> <i class="bi bi-exclamation-triangle-fill"></i> Error</h1>
         <h3>An error occurred while processing your request.</h3>
-        <i>This could arise from factors such as an incorrect password, session timeout, invalid input, connectivity issues, or a server error.</i>
+        <i>This could arise from factors such as an <u>incorrect password</u>, <u>session timeout</u>, <u>invalid input</u>, <u>connectivity issues</u>, or a <u>server error</u>.</i>
     </div>
     <a href="/"><button class="back"><i class="bi bi-caret-left-fill"></i> Return To Dashboard</button></a>
 </body>

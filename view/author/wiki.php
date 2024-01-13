@@ -1,5 +1,12 @@
 <?php
     extract($data);
+    if(!isset($_SESSION['user'])) {
+        header('Location: /login');
+    } else if ($_SESSION['user']['role'] == 'admin') {
+        header('Location: /admin/account');
+    }  else if ($_SESSION['user']['role'] != 'user') {
+        header('Location: /404');
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">

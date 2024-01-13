@@ -4,6 +4,7 @@ use App\Router;
 use App\controllers\LoginController;
 use App\controllers\author\HomeController;
 use App\controllers\author\AuthorController;
+use App\controllers\admin\AdminController;
 
 $routes = new Router();
 
@@ -24,7 +25,6 @@ $routes->get('/logout', LoginController::class, 'logout');
 $routes->post('/login/verify', LoginController::class, 'login');
 $routes->get('/login/error', HomeController::class, 'login');
 $routes->post('/register/verify', LoginController::class, 'register');
-$routes->get('/wiki', HomeController::class, 'wiki');
 $routes->post('/wiki/add', AuthorController::class, 'createWiki');
 $routes->get('/edit' , AuthorController::class, 'editWiki');
 $routes->post('/edit/account' , AuthorController::class, 'editAccount');
@@ -35,7 +35,16 @@ $routes->get('/404' , HomeController::class, 'notFound');
 $routes->get('/myWikis' , HomeController::class, 'wikis');
 $routes->get('/search' , HomeController::class, 'search');
 $routes->get('/searchTag' , HomeController::class, 'searchTag');
-
+$routes->get('/admin', AdminController::class , 'adminHome');
+$routes->get('/admin/home', AdminController::class , 'adminHome');
+$routes->get('/admin/allwikis', AdminController::class , 'adminWikis');
+$routes->get('/admin/users', AdminController::class , 'adminUsers');
+$routes->get('/admin/categories', AdminController::class , 'adminCategories');
+$routes->get('/admin/alltags', AdminController::class , 'adminTags');
+$routes->get('/deleteCat', AdminController::class , 'deleteCat');
+$routes->post('/editCat', AdminController::class , 'editCat');
+$routes->post('/addCat', AdminController::class , 'addCat');
+$routes->get('/admin/wiki', AdminController::class , 'adminWiki');
 $routes->dispatch();
 
 ?>

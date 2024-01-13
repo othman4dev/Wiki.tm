@@ -49,9 +49,9 @@ main {
     min-height: 100%;
 }
 .left-side {
-    width: 30%;
+    width: 300px;
     max-width: 300px;
-    min-width: 250px;
+    min-width: 300px;
     background-color: #fff;
     position: relative;
     height: calc( 100vh - 70px );
@@ -300,6 +300,7 @@ main {
 }
 .big {
     height: fit-content;
+    max-width: 100%;
 }
 .back {
     background-color: #0091dc;
@@ -714,9 +715,7 @@ legend {
     gap: 15px;
     padding: 15px;
 }
-.loading {
-    mix-blend-mode: hard-light;
-}
+
 .title-img {
     border-radius: 50%;
     background-color: #0091dc;
@@ -748,4 +747,87 @@ legend {
 }
 #searchTags::placeholder {
     color: #0091dc;
+}
+.result:hover {
+    background-color: #f7f7f7;
+}
+.span-tag {
+    background-color: #0091dc30;
+    padding: 5px;
+    border-radius: 5px;
+    color: #0091dc;
+}
+.tags-table {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.table-btn {
+    background-color: transparent;
+    color: #000000;
+    border: none;
+    outline: none;
+    padding: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.table-btn:hover {
+    background-color: #dc000020;
+    color: #dc0000;
+}
+.justify {
+    justify-content: space-evenly;
+}
+#editModal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%,-50%);
+    background-color: #fff;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    box-shadow: 0 0 5000px 500px #00000020;
+    padding: 15px;
+    padding-inline: 25px;
+    z-index: 99;
+    display: none;
+}
+#addModal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%,-50%);
+    background-color: #fff;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    box-shadow: 0 0 5000px 500px #00000020;
+    padding: 15px;
+    padding-inline: 25px;
+    z-index: 99;
+    display: none;
+}
+.cat-edit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    color: #0091dc;
+    flex-grow: 1;
+    justify-content: space-evenly;
+    position: relative;
+}
+.help {
+    background-color: #dcd500 !important;
+    color: #fff !important;
 }

@@ -18,9 +18,9 @@
                 header('Location: /home');
             } else if ($user && $user['role'] === 'admin') {
                 $_SESSION['user'] = $user;
-                header('Location: /admin/home');
+                header('Location: /admin');
             } else {
-                header('Location: /login/error');
+                header('Location: /error');
             }
         }
         public static function register() {
@@ -32,7 +32,7 @@
             if ($user) {
                 header('Location: /login');
             } else {
-                header('Location: /login/error');
+                header('Location: /error');
             }
         }
         public static function logout() {

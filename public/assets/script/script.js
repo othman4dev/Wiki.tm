@@ -78,14 +78,17 @@ if (localStorage.getItem("side") == null) {
 } else {
     side = JSON.parse(localStorage.getItem("side"));
 }
-if (localStorage.getItem("current") == null) {
-    current = 'home';
-    localStorage.setItem("current", current);
-} else {
-    current = localStorage.getItem("current");
-    document.querySelector(`.${current}`).classList.add("current");
-    console.log(current);
+console.log(window.location.href);
+let position = window.location.href.split('/');
+position = position[position.length - 1].split('?')[0];
+let all = document.querySelectorAll(".category")[0].querySelectorAll("li");
+all.forEach(element => {
+    element.classList.remove("current");
+});
+if (position == "wiki") {
+    position = "allwikis";
 }
+document.querySelector(`.${position}`).classList.add("current");
 function hideSide() {
     let width = document.querySelector(".left-side").offsetWidth;
     let masked = width - 60;
@@ -170,21 +173,6 @@ function setSide() {
     }
 }
 setSide();
-function redirect(e) {
-    localStorage.removeItem("current");
-    localStorage.setItem("current", e);
-    goTo(e);
-}
-function goTo(e) {
-    if (e == 'home') {
-        window.location.href = "/home";
-    } else if (e == 'accounts') {
-        window.location.href = "/account";
-    } else {
-        console.log(e);
-        window.location.href = "/category/" + e;
-    }
-}
 function showAccount() {
     if (account == false) {
         document.querySelector("#accDown").style.display = "flex";
@@ -276,7 +264,7 @@ document.getElementById('passold').addEventListener('keydown', function () {
 function ajaxSearch(e) {
     let defaults = `
     <div class="result">
-        <img src="assets/images/loading.svg" class="loading" alt="">
+        <img src="/assets/images/loading.svg" class="loading" alt="">
     </div>
     `;
     document.getElementById('searchTags').value = "";
@@ -330,4 +318,17 @@ function warning(choice) {
         document.getElementById('deleteWikis').style.display = "flex";
     }
     
+}
+function transferHrefEdit(href,val) {
+    document.getElementById('editModal').querySelector('#hrefHere').action =  '/editCat?id=' + href;
+    document.getElementById('editModal').querySelector('#idHere').value = parseInt(href);
+    document.getElementById('editModal').querySelector('#valueHere').value = val;
+    document.getElementById('editModal').style.display = "flex";
+}
+function transferHrefDelete(href) {
+    document.getElementById('deleteModal').querySelector('#hrefHere1').href = '/deleteCat?id=' + href;
+    document.getElementById('deleteModal').style.display = "flex";
+}
+function addCat () {
+    document.getElementById('addModal').style.display = "flex";
 }

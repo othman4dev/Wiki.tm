@@ -1,15 +1,11 @@
-<?php 
-    require_once '../app/models/connection.php';
-    require_once '../app/models/UserModel.php';
-    require_once '../app/models/author/HomeModel.php';
-    require_once '../app/controller.php';
-    require_once '../app/controllers/author/HomeController.php';
-    session_start();
+<?php
     if(!isset($_SESSION['user'])) {
         header('Location: /login');
+    } else if ($_SESSION['user']['role'] == 'admin') {
+        header('Location: /admin/account');
+    }  else if ($_SESSION['user']['role'] != 'user') {
+        header('Location: /404');
     }
-    $home = new App\controllers\author\HomeController();
-    $home->index();
 ?>
 <!DOCTYPE html>
 <html lang="en">
