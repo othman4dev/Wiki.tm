@@ -80,4 +80,34 @@
             $stmt->execute([$name]);
             return true;
         }
+        public static function deleteTag($id) {
+            $sql = "DELETE FROM tags WHERE id = ?";
+            $stmt = connection::connect()->prepare($sql);
+            $stmt->execute([$id]);
+            return true;
+        }
+        public static function editTag($id, $name) {
+            $sql = "UPDATE tags SET name = ? WHERE id = ?";
+            $stmt = connection::connect()->prepare($sql);
+            $stmt->execute([$name, $id]);
+            return true;
+        }
+        public static function addTag($name) {
+            $sql = "INSERT INTO tags (name) VALUES (?)";
+            $stmt = connection::connect()->prepare($sql);
+            $stmt->execute([$name]);
+            return true;
+        }
+        public static function archive() {
+            $sql = "UPDATE wikis SET visible = 0 WHERE id = ?";
+            $stmt = connection::connect()->prepare($sql);
+            $stmt->execute([$_GET['id']]);
+            return true;
+        }
+        public static function unarchive() {
+            $sql = "UPDATE wikis SET visible = 1 WHERE id = ?";
+            $stmt = connection::connect()->prepare($sql);
+            $stmt->execute([$_GET['id']]);
+            return true;
+        }
     }

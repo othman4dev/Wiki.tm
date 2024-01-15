@@ -1,10 +1,10 @@
-<?php
+<?php 
     extract($data);
     if(!isset($_SESSION['user'])) {
         header('Location: /login');
-    } else if ($_SESSION['user']['role'] == 'admin') {
-        header('Location: /admin/accounts');
-    }  else if ($_SESSION['user']['role'] != 'user') {
+    }  else if ($_SESSION['user']['role'] == 'admin') {
+        header('Location: /admin/home');
+    } else if ($_SESSION['user']['role'] != 'user') {
         header('Location: /404');
     }
 ?>
@@ -20,7 +20,7 @@
     <title>Welcome to Wiki.tm</title>
 </head>
 <body>
-<header>
+    <header>
         <div class="flex-center">
             <img src="/assets/images/wikis.svg" alt="wiki.tm" class="logo-top">
             <h2>iki.tm</h2>
@@ -81,81 +81,22 @@
         </div>
         <div class="main">
             <div class="card-inv">
-                <h1><?=$wikis['title']?></h1>
-                <p><?=$wikis['category_name']?></p>
+                <h1>Dashboard</h1>
+                <p>Most recent Wikis</p>
             </div>
-            <div class="card big">
-                <h2 style="display: flex;align-items: center;gap: 15px;">
-                    <div class="image-wiki">
-                        <div>
-                            <?php
-                                echo strtoupper(substr($wikis['title'], 0, 2));
-                            ?>
-                        </div>
-                    </div>
-                    <?=$wikis['title']?>
-                </h2>
-                <p class="des">
-                    <?=$wikis['description']?>
-                </p>
-                    <div class="tags">
-                    <?php
-                            foreach ($tags as $tag) {
-                                if ($tag['wiki_id'] == $wikis['wiki_id']) {
-                                    echo '<span># ' . $tag['name'] . '</span>';
-                                }
-                            }
-                            echo '<span class="category-wiki">' . $wikis['category_name'] . '</span>';
-                            echo '<span class="words-count">' . str_word_count($wikis['body']) . ' Words' . '</span>';
-                            echo '<span class="date-wiki">' . date('d M Y', strtotime($wikis['created_at'])) . '</span>';
-                        ?> 
-                        </div>
-                <article class="body-article">
-                    <?=$wikis['body'] ?>
-                </article>
-            </div>
-            <div class="card-inv"><h1>Same Author :</h1></div>
-            <div class="card-2">
-                <?php
-                    foreach ($same as $sameWiki) {
-                        echo '<div class="card fixed">
-                        <a href="/wiki?id='.$sameWiki['wiki_id'].'" >
-                        <h2 style="display: flex;align-items: center;gap: 15px;">
-                            <div class="image-wiki">
-                                <div>
-                                    '.strtoupper(substr($sameWiki['title'], 0, 2)).'
-                                </div>
-                            </div>
-                            '.$sameWiki['title'].'
-                        </h2></a>
-                        <p class="des">
-                            '.$sameWiki['description'].'
-                        </p>
-                        <div class="tags">';?> 
-                            <?php
-                                foreach ($tags as $tag) {
-                                    if ($tag['wiki_id'] == $sameWiki['wiki_id']) {
-                                        echo '<span># ' . $tag['name'] . '</span>';
-                                    }
-                                }
-                                echo '<span class="category-wiki">' . $sameWiki['category_name'] . '</span>';
-                                echo '<span class="words-count">' . str_word_count($sameWiki['body']) . ' Words' . '</span>';
-                                echo '<span class="date-wiki">' . date('d M Y', strtotime($sameWiki['created_at'])) . '</span>';
-                            ?> 
-                            <?php echo '
-                        </div></div>';
-                    }
-                
-                
+            <?php 
+            extract($data);
+            ?>
+            <div class="card-2 wrap">
+                <?php 
+                foreach ($categories as $category) {
+                    echo '
+                    <div class="card fixed" style="position:relative;overflow:hidden">
+                    <i class="bi bi-bookmark-fill styled"></i>
+                        <a href="/getCategory?id='.$category["id"].'"><h1 style="text-align:center;" class="big-link">'.$category["name"].'</h1></a>
+                    </div>';
+                }
                 ?>
-            
-            </div>
-            <div class="card-inv">
-                <a href="home">
-                    <button class="back">
-                        <i class="bi bi-caret-left-fill"></i> Back to dashboard
-                    </button>
-                </a>
             </div>
             <div class="card-2">
                 <div class="footer">
@@ -166,7 +107,6 @@
             </div>
         </div>
     </main>
-    
 </body>
 </html>
-<script src="/assets/script/script.js"></script>
+<script src="/assets/script/script.js" ></script>

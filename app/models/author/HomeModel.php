@@ -6,14 +6,14 @@
 
     class HomeModel extends UserModel{
         public static function getRecent() {
-            $sql = "SELECT *, category.id as categoryID , category.name as category_name , category.created_at as category_date FROM wikis JOIN category ON category_id = category.id ORDER BY wikis.created_at DESC LIMIT 5";
+            $sql = "SELECT *, category.id as categoryID , category.name as category_name , category.created_at as category_date FROM wikis JOIN category ON category_id = category.id WHERE visible = 1 ORDER BY wikis.created_at DESC LIMIT 5";
             $stmt = connection::connect()->prepare($sql);
             $stmt->execute();
             $wikis = $stmt->fetchAll();
             return $wikis;
         }
         public static function getAll() {
-            $sql = "SELECT *, wikis.id as wiki_id, category.id as categoryID , category.name as category_name , category.created_at as category_date  FROM wikis LEFT JOIN category ON category_id = category.id  ORDER BY wikis.created_at DESC;";
+            $sql = "SELECT *, wikis.id as wiki_id, category.id as categoryID , category.name as category_name , category.created_at as category_date  FROM wikis LEFT JOIN category ON category_id = category.id WHERE visible = 1 ORDER BY wikis.created_at DESC;";
             $stmt = connection::connect()->prepare($sql);
             $stmt->execute();
             $wikis = $stmt->fetchAll();
@@ -34,21 +34,21 @@
             return $wiki;
         }
         public static function getSameAuthor($author_id) {
-            $sql = "SELECT * , category.name as category_name , category.id as category_id , wikis.id as wiki_id FROM wikis JOIN category ON wikis.category_id = category.id WHERE author_id = ? ORDER BY RAND() LIMIT 3";
+            $sql = "SELECT * , category.name as category_name , category.id as category_id , wikis.id as wiki_id FROM wikis JOIN category ON wikis.category_id = category.id WHERE author_id = ? AND visible = 1 ORDER BY RAND() LIMIT 3";
             $stmt = connection::connect()->prepare($sql);
             $stmt->execute([$author_id]);
             $wikis = $stmt->fetchAll();
             return $wikis;
         }
         public static function getSameAuthorAll($author_id) {
-            $sql = "SELECT * , category.name as category_name , category.id as category_id , wikis.id as wiki_id FROM wikis JOIN category ON wikis.category_id = category.id WHERE author_id = ? ORDER BY wikis.created_at DESC";
+            $sql = "SELECT * , category.name as category_name , category.id as category_id , wikis.id as wiki_id FROM wikis JOIN category ON wikis.category_id = category.id WHERE author_id = ? AND visible = 1 ORDER BY wikis.created_at DESC";
             $stmt = connection::connect()->prepare($sql);
             $stmt->execute([$author_id]);
             $wikis = $stmt->fetchAll();
             return $wikis;
         }
         public static function getCategory($category) {
-            $sql = "SELECT * , category.name as category_name , category.id as category_id , wikis.id as wiki_id FROM wikis JOIN category ON category_id = category.id WHERE category.name = ? ORDER BY wikis.created_at DESC";
+            $sql = "SELECT * , category.name as category_name , category.id as category_id , wikis.id as wiki_id FROM wikis JOIN category ON category_id = category.id WHERE category.name = ? AND visible = 1 ORDER BY wikis.created_at DESC";
             $stmt = connection::connect()->prepare($sql);
             $stmt->execute([$category]);
             $wikis = $stmt->fetchAll();
@@ -83,7 +83,7 @@
             FROM wikis 
             INNER JOIN wiki_tag ON wiki_tag.wiki_id = wikis.id 
             LEFT JOIN category ON wikis.category_id = category.id 
-            WHERE title LIKE ? OR description LIKE ? OR body LIKE ? OR category.name LIKE ? 
+            WHERE visible = 1 AND ( title LIKE ? OR description LIKE ? OR body LIKE ? OR category.name LIKE ? )
             ORDER BY wikis.created_at DESC 
             LIMIT 10 OFFSET 0;";
             $stmt = connection::connect()->prepare($sql);
@@ -119,7 +119,7 @@
         }
         public static function searchTag($search) {
             $tags = HomeModel::getTags();
-            $sql = "SELECT * , wikis.id as wikis_id , category.name as category_name FROM wikis JOIN category ON wikis.category_id = category.id JOIN wiki_tag ON wikis.id = wiki_tag.wiki_id JOIN tags ON wiki_tag.tag_id = tags.id WHERE tags.name LIKE ? ORDER BY wikis.created_at DESC LIMIT 10 OFFSET 0";
+            $sql = "SELECT * , wikis.id as wikis_id , category.name as category_name FROM wikis JOIN category ON wikis.category_id = category.id JOIN wiki_tag ON wikis.id = wiki_tag.wiki_id JOIN tags ON wiki_tag.tag_id = tags.id WHERE tags.name LIKE ? AND visible = 1 ORDER BY wikis.created_at DESC LIMIT 10 OFFSET 0";
             $stmt = connection::connect()->prepare($sql);
             $stmt->execute(['%'.$search.'%',]);
             $wikis = $stmt->fetchAll();
@@ -150,5 +150,12 @@
                 $results = '<div class="result"><div style="color:#00000030;"><i class="bi bi-ban">&nbsp;&nbsp;</i>No Result</div></div>';
             }
             return $results;
+        }
+        public static function getCategoryId($id) {
+            $sql = "SELECT * , category.name as category_name , category.id as category_id , wikis.id as wiki_id FROM wikis JOIN category ON category_id = category.id WHERE category.id = ? AND visible = 1 ORDER BY wikis.created_at DESC";
+            $stmt = connection::connect()->prepare($sql);
+            $stmt->execute([$id]);
+            $wikis = $stmt->fetchAll();
+            return $wikis;
         }
     }

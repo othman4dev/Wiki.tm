@@ -3,7 +3,7 @@
     if(!isset($_SESSION['user'])) {
         header('Location: /login');
     }  else if ($_SESSION['user']['role'] == 'user') {
-        header('Location: /user/home');
+        header('Location: /author/home');
     } else if ($_SESSION['user']['role'] != 'admin') {
         header('Location: /404');
     }
@@ -21,15 +21,12 @@
     <script src="https://cdn.tiny.cloud/1/w5o6851coln6uxz4eqge6bq0qi2ez0n5zwyprq67sybzjlf9/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script type="module" src="/assets/tinymce/js/tinymce/tinymce.min.js"></script>
-    <script type="module" src="/assets/node_modules/jquery/dist/jquery.js"></script>
-    <script type="module" src="/assets/node_modules/jquery/dist/jquery.min.js"></script>
     <title>Welcome to Wiki.tm</title>
 </head>
 <body>
 <header>
         <div class="flex-center">
-            <img src="assets/images/wikis.svg" alt="wiki.tm" class="logo-top">
+            <img src="/assets/images/wikis.svg" alt="wiki.tm" class="logo-top">
             <h2>iki.tm</h2>
             <div class="search-div">
                 <input type="search" onkeyup="ajaxSearch(this)" id="search" autocomplete="off" spellcheck="false" class="search" name="search" placeholder="Search Anything">
@@ -56,7 +53,7 @@
                         <p class="mail"><?php echo $_SESSION['user']['email'] ?></p>
                     </div>
                 </div>
-                <a onclick="redirect('accounts')">
+                <a href="/accounts">
                     <li class="account-btn"><i class="bi bi-person"></i>Account</li>
                 </a>
                 <a href="/logout">
@@ -112,12 +109,9 @@
             <div class="card slim" style="justify-content: space-between;align-items: center;">
                 <h1>What do you have in mind ?</h1>
                 <div class="account-options">
-                    <div class="back" onclick="showWiki('show')">
-                        Add A Wiki <i class="bi bi-plus-circle"></i>
+                    <div class="back" onclick="showInfo()">
+                        Log as an author<i class="bi bi-person"></i></i>
                     </div>
-                    <a href="/myWikis"><div class="back">
-                        My Wikis <i class="bi bi-wikipedia"></i></i>
-                    </div></a>
                     <div class="back" onclick="showEdit()">
                         Edit My Account <i class="bi bi-pencil-square"></i>
                     </div>
@@ -271,6 +265,14 @@
             <div class="delete-btns">
                 <button class="back success" onclick="this.parentNode.parentNode.style.display = 'none'">Cancel</button>
                 <a href="/delete?id=" id="deleteHref"><button class="back danger">Delete</button></a>
+            </div>
+    </div>
+    <div id="infoModal">
+            <h1>Are You Sure ?</h1>
+            <p>You won't be able to come back as an admin unless you Logout then Login again</p>
+            <div class="delete-btns">
+                <button class="back success" onclick="this.parentNode.parentNode.style.display = 'none'">Cancel</button>
+                <a href="/turnAuthor" id="deleteHref"><button class="back help">Switch</button></a>
             </div>
     </div>
     <div id="deleteAccount">

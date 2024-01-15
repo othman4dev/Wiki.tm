@@ -1,6 +1,14 @@
+// GITHUB :  Othman4dev.
+//Script 100% Made By Othmane Kharbouch.
+
+// Global variables
+
 let side = true;
 let current = "home";
 let account = false;
+
+// Here is the HTML for the login and register forms
+
 let sideForm1 = `
 <div class="register">
     <form onsubmit="return false;">
@@ -30,36 +38,36 @@ let sideForm2 = `
 </div>
 `;
 let login = `
-<form action="/login/verify" method="post" class="ini-form">
+<form action="/login/verify" onsubmit="event.preventDefault()" method="post" class="ini-form" id="login-form">
     <div class="login-header">
         <i class="bi bi-person-circle" style="font-size: 48px;"></i>
         <h2>Login</h2>
     </div>
     <label>
         <p class="moved">Email</p>
-        <input type="text" class="inp" onkeyup="moveUp(this)" onfocus="moveUp(this)" onblur="moveDown(this)" name="email" required>
+        <input type="text" class="inp" id="email-login" onkeyup="moveUp(this)" onfocus="moveUp(this)" onblur="moveDown(this)" name="email" required>
     </label>
     <label>
         <p class="moved">Password</p>
-        <input type="password" class="inp" onkeyup="moveUp(this)" onfocus="moveUp(this)" onblur="moveDown(this)" name="password" required>
+        <input type="password" min="6" id="pass-login" class="inp" onkeyup="moveUp(this)" onfocus="moveUp(this)" onblur="moveDown(this)" name="password" required>
     </label>
-    <a href="reset.php">Forgot Password ?</a>
-    <input type="submit" value="Login" name="login">
+    <a href="/reset">Forgot Password ?</a>
+    <input type="submit" value="Login" onclick="validation('login')" name="login">
 </form>
 `;
 let register = `
-<form action="/register/verify" method="post"  onsubmit="return false;" class="ini-form">
+<form action="/register/verify" method="post" id="register-form"  onsubmit="return false;" class="ini-form">
     <div class="login-header">
         <i class="bi bi-person-circle" style="font-size: 48px;"></i>
         <h2>Register</h2>
     </div>
     <label>
         <p class="moved">Full Name</p>
-        <input type="text" class="inp" onkeyup="moveUp(this)" onfocus="moveUp(this)" onblur="moveDown(this)" name="name" required>
+        <input type="text" class="inp" onkeyup="moveUp(this)" onfocus="moveUp(this)" onblur="moveDown(this)" min="4" name="name" required>
     </label>
     <label>
         <p class="moved">Email</p>
-        <input type="text" class="inp" onkeyup="moveUp(this)" onfocus="moveUp(this)" onblur="moveDown(this)" name="email"required>
+        <input type="text" class="inp" onkeyup="moveUp(this)" onfocus="moveUp(this)" onblur="moveDown(this)" id="register-email" name="email"required>
     </label>
     <label>
         <p class="moved">New Password</p>
@@ -69,9 +77,69 @@ let register = `
         <p class="moved">Rewrite Password</p>
         <input type="text" class="inp" onkeyup="moveUp(this)" onfocus="moveUp(this)" onblur="moveDown(this)" required id="pass2" autocomplete="off">
     </label>
-    <input type="submit" value="Create Account" name="register" onclick="verifyPassword()">
+    <input type="submit" value="Create Account" name="register" onclick="validation('register')">
 </form>
 `;
+
+
+// Here is the redirection system for preventing doubled actions.
+var position = window.location.href.split('/');
+position = position[position.length - 1].split('?')[0];
+
+var locations = window.location.href.split('/');
+locations = locations[locations.length - 1].split('?')[0];
+console.log('This is the location : ' + locations);
+if (locations == 'deleteTag') {
+    position = 'alltags';
+    window.location.href = '/admin/alltags';
+} else if (locations == 'editTag') {
+    position = 'alltags';
+    window.location.href = '/admin/alltags';
+} else if (locations == 'addTag') {
+    position = 'alltags';
+    window.location.href = '/admin/alltags';
+} else if (locations == 'deleteCat') {
+    position = 'categories';
+    window.location.href = '/admin/categories';
+} else if (locations == 'editCat') {
+    position = 'categories';
+    window.location.href = '/admin/categories';
+} else if (locations == 'addCat') {
+    position = 'categories';
+    window.location.href = '/admin/categories';
+} else if (locations == "turnAuthor") {
+    position = 'home';
+    window.location.href = '/';
+} else if (locations == "add") {
+    position = 'accounts';
+    window.location.href = '/accounts';
+} else if (locations == "update") {
+    position = 'accounts';
+    window.location.href = '/accounts';
+} else if (locations == "delete") {
+    position = 'accounts';
+    window.location.href = '/accounts';
+} else if (locations == "update") {
+    position = 'accounts';
+    window.location.href = '/accounts';
+} else if (locations == "localhost:8080") {
+    position = 'home';
+} else if (locations == "categories") {
+    position = 'categories';
+} else if (locations == 'getCategory') {
+    position = 'categories';
+} else if (locations == "wiki") {
+    position = 'home';
+} else if (locations == "archive") {
+    window.location.href = '/admin/allwikis';
+    position = 'allwikis';
+} else if (locations == "unarchive") {
+    window.location.href = '/admin/allwikis';
+    position = 'allwikis';
+}
+
+// Here is the side status system
+
 if (localStorage.getItem("side") == null) {
     side = true;
     localStorage.setItem("side", JSON.stringify(side));
@@ -79,8 +147,6 @@ if (localStorage.getItem("side") == null) {
     side = JSON.parse(localStorage.getItem("side"));
 }
 console.log(window.location.href);
-let position = window.location.href.split('/');
-position = position[position.length - 1].split('?')[0];
 let all = document.querySelectorAll(".category")[0].querySelectorAll("li");
 all.forEach(element => {
     element.classList.remove("current");
@@ -88,7 +154,17 @@ all.forEach(element => {
 if (position == "wiki") {
     position = "allwikis";
 }
-document.querySelector(`.${position}`).classList.add("current");
+if (document.getElementById('category-title')) {
+    document.getElementById('category-title').innerText = position.toUpperCase();
+}
+if (document.querySelector(`.${position}`)) {
+    document.querySelector(`.${position}`).classList.add("current");
+} else {
+    document.querySelector(`.home`).classList.add("current");
+}
+
+//Here is the functions for the website
+
 function hideSide() {
     let width = document.querySelector(".left-side").offsetWidth;
     let masked = width - 60;
@@ -209,10 +285,16 @@ function toggleAuth(e) {
     }
 }
 function verifyPassword() {
-    let pass1 = document.getElementById("pass1").value;
-    let pass2 = document.getElementById("pass2").value;
-    if (pass1 == pass2) {
-        document.querySelector(".ini-form").submit();
+    let pass1 = document.getElementById("pass1");
+    let pass2 = document.getElementById("pass2");
+    if (pass1.value == "" || pass2.value == "") {
+        document.getElementById("pass1").setCustomValidity("Please fill this field");
+    }
+    if (pass1.value.length < 8) {
+        document.getElementById("pass1").setCustomValidity("Password must be at least 8 characters long");
+    }
+    if (pass1.value == pass2.value) {
+        document.querySelector("#login-form").submit();
     } else {
         document.getElementById("pass2").setCustomValidity("Passwords Don't Match");
     }
@@ -289,7 +371,7 @@ function ajaxSearch(e) {
 function ajaxSearchTags(e) {
     let defaults = `
     <div class="result">
-        <img src="assets/images/loading.svg" class="loading" alt="">
+        <img src="/assets/images/loading.svg" class="loading" alt="">
     </div>
     `;
     document.getElementById('search').value = "";
@@ -331,4 +413,94 @@ function transferHrefDelete(href) {
 }
 function addCat () {
     document.getElementById('addModal').style.display = "flex";
+}
+function showInfo() {
+    document.getElementById('infoModal').style.display='flex';
+}
+var ids = 0;
+function tagModal(id , name) {
+    ids = id;
+    document.getElementById('tagModal').style.display='flex';
+    document.getElementById('tagModal').querySelector('#valueHere').value = name;
+
+}
+function submit(option) {
+    if (option == 'edit') {
+        document.getElementById('tagModal').querySelector('#actionHere').action = '/admin/editTag';
+        document.getElementById('tagModal').querySelector('#idHere').value = ids;
+        document.getElementById('tagModal').querySelector('#actionHere').submit();
+    } else if (option == 'delete') {
+        document.getElementById('tagModal').querySelector('#actionHere').action = '/admin/deleteTag';
+        document.getElementById('tagModal').querySelector('#idHere').value = ids;
+        document.getElementById('tagModal').querySelector('#actionHere').submit();
+    } else {
+        window.location.href = '/error';
+    }
+}
+function showAddTag() {
+    document.getElementById('addTagModal').style.display='flex';
+}
+function validation(type) {
+    if (type == 'login') {
+        let email = document.querySelector('#email-login');
+        if (email.value == '') {
+            email.setCustomValidity('Please fill this field');
+        } else {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email.value)) {
+                email.setCustomValidity('Please enter a valid email address');
+            } else {
+                email.setCustomValidity('');
+                if (document.querySelector('#pass-login').value == '') {
+                    document.querySelector('#pass-login').setCustomValidity('Please fill this field');
+                } else {
+                    if (document.querySelector('#pass-login').value.length < 7) {
+                        document.querySelector('#pass-login').setCustomValidity('Password must be at least 8 characters long');
+                        
+                    } else {
+                        document.querySelector('#pass-login').setCustomValidity('');
+                        document.querySelector('#login-form').submit();
+                    }
+                }
+            }
+        }
+    } else if (type == "register") {
+        let email = document.querySelector('#register-email');
+        if (email.value == '') {
+            email.setCustomValidity('Please fill this field');
+        } else {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email.value)) {
+                email.setCustomValidity('Please enter a valid email address');
+            } else {
+                email.setCustomValidity('');
+                if (document.querySelector('#pass1').value == '') {
+                    document.querySelector('#pass1').setCustomValidity('Please fill this field');
+                } else {
+                    if (document.querySelector('#pass1').value.length < 7) {
+                        document.querySelector('#pass1').setCustomValidity('Password must be at least 8 characters long');
+                        
+                    } else {
+                        document.querySelector('#pass1').setCustomValidity('');
+                        if (document.querySelector('#pass2').value == '') {
+                            document.querySelector('#pass2').setCustomValidity('Please fill this field');
+                        } else {
+                            if (document.querySelector('#pass2').value.length < 7) {
+                                document.querySelector('#pass2').setCustomValidity('Password must be at least 8 characters long');
+                                
+                            } else {
+                                document.querySelector('#pass2').setCustomValidity('');
+                                if (document.querySelector('#pass1').value != document.querySelector('#pass2').value) {
+                                    document.querySelector('#pass2').setCustomValidity("Passwords Don't Match");
+                                } else {
+                                    document.querySelector('#pass2').setCustomValidity('');
+                                    document.querySelector('#register-form').submit();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

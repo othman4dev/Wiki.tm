@@ -1,8 +1,9 @@
 <?php 
+    extract($data);
     if(!isset($_SESSION['user'])) {
         header('Location: /login');
     }  else if ($_SESSION['user']['role'] == 'user') {
-        header('Location: /user/home');
+        header('Location: /author/home');
     } else if ($_SESSION['user']['role'] != 'admin') {
         header('Location: /404');
     }
@@ -51,7 +52,7 @@
                         <p class="mail"><?php echo $_SESSION['user']['email'] ?></p>
                     </div>
                 </div>
-                <a onclick="redirect('accounts')">
+                <a href="/accounts">
                     <li class="account-btn"><i class="bi bi-person"></i>Account</li>
                 </a>
                 <a href="/logout">

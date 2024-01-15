@@ -2,7 +2,7 @@
     if(!isset($_SESSION['user'])) {
         header('Location: /login');
     } else if ($_SESSION['user']['role'] == 'admin') {
-        header('Location: /admin/account');
+        header('Location: /admin/accounts');
     }  else if ($_SESSION['user']['role'] != 'user') {
         header('Location: /404');
     }
@@ -12,16 +12,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/style/style.css">
+    <link rel="stylesheet" href="/assets/style/style.css">
     <link href="https://fonts.cdnfonts.com/css/montserrat" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="shortcut icon" href="assets/images/favicon.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="/assets/images/favicon.svg" type="image/x-icon">
     <title>Welcome to Wiki.tm</title>
 </head>
 <body>
     <header>
         <div class="flex-center">
-            <img src="assets/images/wikis.svg" alt="wiki.tm" class="logo-top">
+            <img src="/assets/images/wikis.svg" alt="wiki.tm" class="logo-top">
             <h2>iki.tm</h2>
             <div class="search-div">
                 <input type="search" onkeyup="ajaxSearch(this)" id="search" autocomplete="off" spellcheck="false" class="search" name="search" placeholder="Search Anything">
@@ -30,7 +30,7 @@
             </div>
             <div id="searchDrop">
                 <div class="result">
-                    <img src="assets/images/loading.svg" class="loading" alt="">
+                    <img src="/assets/images/loading.svg" class="loading" alt="">
                 </div>
             </div>
         </div>
@@ -48,7 +48,7 @@
                         <p class="mail"><?php echo $_SESSION['user']['email'] ?></p>
                     </div>
                 </div>
-                <a onclick="redirect('accounts')">
+                <a href="/accounts">
                     <li class="account-btn"><i class="bi bi-person"></i>Account</li>
                 </a>
                 <a href="/logout">
@@ -61,17 +61,18 @@
         <div class="left-side">
             <h4 class="subs">General</h4>
             <div class="category">
-                <a onclick="redirect('home')"><li class="home"><i class="bi bi-table"></i> &nbsp; Dashboard</li></a>
-                <a onclick="redirect('accounts')"><li class="accounts"><i class="bi bi-person-circle"></i> &nbsp; Account</li></a>
+                <a href="/home"><li class="home"><i class="bi bi-table"></i> &nbsp; Dashboard</li></a>
+                <a href="/accounts"><li class="accounts"><i class="bi bi-person-circle"></i> &nbsp; Account</li></a>
             </div>
             <h4 class="subs">Categories</h4>
             <div class="category">
-                <a onclick="redirect('books')"><li class="books"><i class="bi bi-book-half"></i> Books</li></a>
-                <a onclick="redirect('gaming')"><li class="gaming"><i class="bi bi-controller"></i> Gaming</li></a>
-                <a onclick="redirect('cars')"><li class="cars"><i class="bi bi-car-front-fill"></i> Cars</li></a>
-                <a onclick="redirect('technologies')"><li class="technologies"><i class="bi bi-apple"></i> Technologies</li></a>
-                <a onclick="redirect('science')"><li class="science"><i class="bi bi-binoculars-fill"></i> Science</li></a>
-                <a onclick="redirect('others')"><li class="others"><i class="bi bi-columns-gap"></i> Others</li></a>
+                <a href="/category/books"><li class="books"><i class="bi bi-book-half"></i> Books</li></a>
+                <a href="/category/gaming"><li class="gaming"><i class="bi bi-controller"></i> Gaming</li></a>
+                <a href="/category/cars"><li class="cars"><i class="bi bi-car-front-fill"></i> Cars</li></a>
+                <a href="/category/technologies"><li class="technologies"><i class="bi bi-apple"></i> Technologies</li></a>
+                <a href="/category/science"><li class="science"><i class="bi bi-binoculars-fill"></i> Science</li></a>
+                <a href="/category/others"><li class="others"><i class="bi bi-columns-gap"></i> Others</li></a>
+                <a href="/categories"><li class="categories"><i class="bi bi-folder-fill"></i> All Categories</li></a>
             </div>
             <div class="divi" onclick="hideSide(this)">
                 <p><i class="bi bi-caret-left-fill" style="rotate:90deg" id="side-carret"></i></p>
@@ -115,17 +116,6 @@
                 }
             ?>
             <div class="card-2">
-                <div class="card">
-                    
-                </div>
-                <div class="card">
-                    
-                </div>
-                <div class="card">
-                    
-                </div>
-            </div>
-            <div class="card-2">
                 <div class="footer">
                     <p>© 2024 Wiki.tm</p>
                     <p>Privacy Policy</p>
@@ -137,4 +127,4 @@
     
 </body>
 </html>
-<script src="assets/script/script.js" ></script>
+<script src="/assets/script/script.js" ></script>

@@ -3,7 +3,7 @@
     if(!isset($_SESSION['user'])) {
         header('Location: /login');
     } else if ($_SESSION['user']['role'] == 'admin') {
-        header('Location: /admin/account');
+        header('Location: /admin/accounts');
     }  else if ($_SESSION['user']['role'] != 'user') {
         header('Location: /404');
     }
@@ -22,14 +22,12 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script type="module" src="/assets/tinymce/js/tinymce/tinymce.min.js"></script>
-    <script type="module" src="/assets/node_modules/jquery/dist/jquery.js"></script>
-    <script type="module" src="/assets/node_modules/jquery/dist/jquery.min.js"></script>
     <title>Welcome to Wiki.tm</title>
 </head>
 <body>
 <header>
         <div class="flex-center">
-            <img src="assets/images/wikis.svg" alt="wiki.tm" class="logo-top">
+            <img src="/assets/images/wikis.svg" alt="wiki.tm" class="logo-top">
             <h2>iki.tm</h2>
             <div class="search-div">
                 <input type="search" onkeyup="ajaxSearch(this)" id="search" autocomplete="off" spellcheck="false" class="search" name="search" placeholder="Search Anything">
@@ -56,7 +54,7 @@
                         <p class="mail"><?php echo $_SESSION['user']['email'] ?></p>
                     </div>
                 </div>
-                <a onclick="redirect('accounts')">
+                <a href="/accounts">
                     <li class="account-btn"><i class="bi bi-person"></i>Account</li>
                 </a>
                 <a href="/logout">
@@ -66,7 +64,7 @@
         </div>
     </header>
     <main>
-    <div class="left-side">
+        <div class="left-side">
             <h4 class="subs">General</h4>
             <div class="category">
                 <a href="/home"><li class="home"><i class="bi bi-table"></i> &nbsp; Dashboard</li></a>
@@ -80,6 +78,7 @@
                 <a href="/category/technologies"><li class="technologies"><i class="bi bi-apple"></i> Technologies</li></a>
                 <a href="/category/science"><li class="science"><i class="bi bi-binoculars-fill"></i> Science</li></a>
                 <a href="/category/others"><li class="others"><i class="bi bi-columns-gap"></i> Others</li></a>
+                <a href="/categories"><li class="categories"><i class="bi bi-folder-fill"></i> All Categories</li></a>
             </div>
             <div class="divi" onclick="hideSide(this)">
                 <p><i class="bi bi-caret-left-fill" style="rotate:90deg" id="side-carret"></i></p>
@@ -224,8 +223,8 @@
                     }
                 ?>
             </div>
-            <div class="card-inv">
-                <a href="home">
+            <div class="card-2 slim">
+                <a href="home" style="width:300px;">
                     <button class="back">
                         <i class="bi bi-caret-left-fill"></i> Back to dashboard
                     </button>

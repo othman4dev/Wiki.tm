@@ -1,8 +1,9 @@
 <?php 
+    extract($data);
     if(!isset($_SESSION['user'])) {
         header('Location: /login');
     }  else if ($_SESSION['user']['role'] == 'user') {
-        header('Location: /user/home');
+        header('Location: /author/home');
     } else if ($_SESSION['user']['role'] != 'admin') {
         header('Location: /404');
     }
@@ -48,7 +49,7 @@
                         <p class="mail"><?php echo $_SESSION['user']['email'] ?></p>
                     </div>
                 </div>
-                <a onclick="redirect('accounts')">
+                <a href="/accounts">
                     <li class="account-btn"><i class="bi bi-person"></i>Account</li>
                 </a>
                 <a href="/logout">
@@ -74,33 +75,58 @@
         </div>
         <div class="main">
             <div class="card-inv">
-                <h1>Dashboard</h1>
-                <p>Most recent Wikis</p>
+                <h1>Tags</h1>
+                <p>All Tags available</p>
             </div>
             <?php 
             extract($data);
             ?>
-            <div class="card-2">
-                <div class="card fixed">
-                    <h1 style="text-align:center">You have <p style="color:#0091dc;display:inline"><?=$statistic['wikisCount']['COUNT(*)']?></p> Wikis</h1>
-                </div>
-                <div class="card fixed">
-                    <h1 style="text-align:center">You have <p style="color:#0091dc;display:inline"><?=$statistic['usersCount']['COUNT(*)']?></p> Users</h1>
-                </div>
-                <div class="card fixed">
-                    <h1 style="text-align:center">You have <p style="color:#0091dc;display:inline"><?=$statistic['adminCount']['COUNT(*)']?></p> Administrators</h1>
+            <div class="card big" style="padding:20px !important">
+                <h1 style="margin-bottom:15px">All tags</h1>
+                <p style="margin-bottom:15px">Click on a tag to see options</p>
+                <div class="tags-flex">
+                    <?php
+                    foreach ($tags as $tag) {
+                        echo '<span class="tag-test" onclick="tagModal('.$tag['id'].',\''.$tag['name'].'\')"># '.$tag['name'].'</span>';
+                    }
+                    ?>
+                    <span class="tag-test" onclick="showAddTag()">&nbsp; + &nbsp;</span>
                 </div>
             </div>
-            <div class="card-2">
-                <div class="card fixed">
-                    <h1 style="text-align:center">You have <p style="color:#0091dc;display:inline"><?=$statistic['categoryCount']['COUNT(*)']?></p> Categories</h1>
-                </div>
-                <div class="card fixed">
-                    <h1 style="text-align:center">You have <p style="color:#0091dc;display:inline"><?=$statistic['tagsCount']['COUNT(*)']?></p> Tags</h1>
-                </div>
-                <div class="card fixed">
-                    <h1 style="text-align:center">You have <p style="color:#0091dc;display:inline"><?=$statistic['tagUseCount']['COUNT(*)']?></p> Used Tags</h1>
-                </div>
+            <div class="card-2 slim">
+                <button class="back" onclick="showAddTag()">
+                    Add A Tag <i class="bi bi-plus"></i>
+                </button>
+            </div>
+            <div id="tagModal">
+                <form action="/404" id="actionHere" method="post" class="cat-edit" onsubmit="event.preventDefault();">
+                    <label for="">
+                        <p id="moved">
+                            Tag name
+                        </p>
+                        <input autocomplete="off" spellcheck="false" type="text" class="inp-acc" id="valueHere" name="name">
+                    </label>
+                    <input type="text" style="display:none" id="idHere" name="id">
+                    <div class="delete-btns">
+                        <div class="back success" onclick="this.parentNode.parentNode.parentNode.style.display = 'none'">Cancel</div>
+                        <div class="back help" onclick="submit('edit')">Edit <i class="bi bi-pencil-square"></i></div></a>
+                        <div class="back danger" onclick="submit('delete')">Delete <i class="bi bi-trash"></i></div>
+                    </div>
+                </form>
+            </div>
+            <div id="addTagModal">
+                <form action="/admin/addTag" method="post" class="cat-edit">
+                    <label for="">
+                        <p id="moved">
+                            Tag name
+                        </p>
+                        <input autocomplete="off" spellcheck="false" type="text" class="inp-acc" name="name">
+                    </label>
+                    <div class="delete-btns">
+                        <div class="back success" onclick="this.parentNode.parentNode.parentNode.style.display = 'none'">Cancel</div>
+                        <button class="back" role="submit">Add <i class="bi bi-plus-circle-fill"></i></button></a>
+                    </div>
+                </form>
             </div>
             <div class="card-2">
                 <div class="footer">

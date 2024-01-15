@@ -20,21 +20,26 @@
     <main class="main-login">
         <div class="auth">
             <div class="login">
-                <form action="/login/verify" method="post" class="ini-form">
+                <form action="/login/verify" onsubmit="event.preventDefault()" method="post" class="ini-form" id="login-form">
                     <div class="login-header">
                         <i class="bi bi-person-circle" style="font-size: 48px;"></i>
                         <h2>Login</h2>
                     </div>
                     <label>
                         <p class="moved">Email</p>
-                        <input type="text" class="inp" onkeyup="moveUp(this)" onfocus="moveUp(this)" onblur="moveDown(this)" name="email" required>
+                        <input type="text" class="inp" id="email-login" onkeyup="moveUp(this)" onfocus="moveUp(this)" onblur="moveDown(this)" name="email" required>
                     </label>
                     <label>
                         <p class="moved">Password</p>
-                        <input type="password" class="inp" onkeyup="moveUp(this)" onfocus="moveUp(this)" onblur="moveDown(this)" name="password" required>
+                        <input type="password" min="6" id="pass-login" class="inp" onkeyup="moveUp(this)" onfocus="moveUp(this)" onblur="moveDown(this)" name="password" required>
                     </label>
-                    <a href="reset.php">Forgot Password ?</a>
-                    <input type="submit" value="Login" name="login">
+                    <?php 
+                    if (isset($_GET['login']) && $_GET['login'] == 'failed') {
+                        echo '<p class="error-text">Incorrect username or password</p>';
+                    }
+                    ?>
+                    <a href="/reset">Forgot Password ?</a>
+                    <input type="submit" value="Login" onclick="validation('login')" name="login">
                 </form>
             </div>
             <div class="register">

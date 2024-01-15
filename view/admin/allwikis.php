@@ -1,8 +1,9 @@
 <?php 
+    extract($data);
     if(!isset($_SESSION['user'])) {
         header('Location: /login');
     }  else if ($_SESSION['user']['role'] == 'user') {
-        header('Location: /user/home');
+        header('Location: /author/home');
     } else if ($_SESSION['user']['role'] != 'admin') {
         header('Location: /404');
     }
@@ -51,7 +52,7 @@
                         <p class="mail"><?php echo $_SESSION['user']['email'] ?></p>
                     </div>
                 </div>
-                <a onclick="redirect('accounts')">
+                <a href="/accounts">
                     <li class="account-btn"><i class="bi bi-person"></i>Account</li>
                 </a>
                 <a href="/logout">
@@ -83,7 +84,7 @@
             <?php 
             extract($data);
             ?>
-            <div class="card big">
+            <div class="card big" style="min-height:fit-content !important;">
                 <table id="myTable">
                     <thead>
                         <tr>
@@ -92,6 +93,7 @@
                             <th>Tags</th>
                             <th>Created At</th>
                             <th>Author</th>
+                            <th>Visiblity</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -107,15 +109,27 @@
                                         echo '<span class="span-tag"> #' . $tag['name'] . ' </span>';
                                     }
                                 }
-                                echo $wiki['tags'] ?>
+                                ?>
                             </td>
                             <td><?php echo $wiki['created_at'] ?></td>
                             <td><?php echo $wiki['author_name'] ?></td>
                             <td>
-                                <button class="table-btn">
-                                    Archive
-                                    <a href="/admin/archive?id=<?php echo $wiki['id'] ?>"><i class="bi bi-ban"></i></a>
-                                </button>
+                            <?php 
+                            if ($wiki['visible'] == 1) {
+                                echo 'Visible';
+                            } else {
+                                echo 'Hidden';
+                            }
+                            ?></td>
+                            <td>
+                                <?php 
+                                if ($wiki['visible'] == 1) {
+                                    echo '<a href="/admin/archive?id=' . $wiki['wikis_id'] . '"><button class="table-btn" style="width:100%">Archive<i class="bi bi-ban"></i></button></a>';
+                                } else {
+                                    echo '<a href="/admin/unarchive?id=' . $wiki['wikis_id'] . '"><button class="table-btn" style="width:100%">Unarchive<i class="bi bi-check2"></i></button></a>';
+                                }
+                                
+                                ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>

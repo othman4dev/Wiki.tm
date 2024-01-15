@@ -20,7 +20,7 @@
                 $_SESSION['user'] = $user;
                 header('Location: /admin');
             } else {
-                header('Location: /error');
+                header('Location: /login?login=failed');
             }
         }
         public static function register() {

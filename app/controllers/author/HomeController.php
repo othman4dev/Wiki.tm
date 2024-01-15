@@ -5,6 +5,7 @@
     use App\models\UserModel;
     use App\models\author\HomeModel;
     use App\models\author\AuthorModel;
+    use App\models\admin\AdminModel;
 
     class HomeController extends Controller {
 
@@ -92,5 +93,16 @@
         public function searchTag() {
             $data['wikis'] = HomeModel::searchTag($_GET['search']);
             echo $data['wikis'];
+        }
+        public static function categories() {
+            $data['categories'] = AdminModel::getCategories();
+            $controller = new \App\Controller();
+            $controller->view('author/categories', $data);
+        }
+        public static function getCategoryId() {
+            $data['tags'] = HomeModel::getTags();
+            $data['wikis'] = HomeModel::getCategoryId($_GET['id']);
+            $controller = new \App\Controller();
+            $controller->view('author/category', $data);
         }
     }

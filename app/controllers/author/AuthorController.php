@@ -105,4 +105,5 @@
             $data['categoryCount'] = HomeModel::getCategoryCount();
             $controller->view('/author/account', $data);
         }
+        
     }

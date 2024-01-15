@@ -49,7 +49,7 @@
                         <p class="mail"><?php echo $_SESSION['user']['email'] ?></p>
                     </div>
                 </div>
-                <a onclick="redirect('accounts')">
+                <a href="/accounts">
                     <li class="account-btn"><i class="bi bi-person"></i>Account</li>
                 </a>
                 <a href="/logout">
@@ -76,7 +76,7 @@
         <div class="main">
             <div class="card-inv">
                 <h1><?=$wikis['title']?></h1>
-                <p><?=$wikis['category']?></p>
+                <p><?=$wikis['category_name']?></p>
             </div>
             <div class="card big">
                 <h2 style="display: flex;align-items: center;gap: 15px;">
