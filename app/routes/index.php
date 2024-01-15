@@ -38,6 +38,7 @@ $routes->get('/search' , HomeController::class, 'search');
 $routes->get('/searchTag' , HomeController::class, 'searchTag');
 $routes->get('/categories' ,  HomeController::class , 'categories');
 $routes->get('/getCategory' ,  HomeController::class , 'getCategoryId');
+$routes->get('/banned' ,  HomeController::class , 'banned');
 # Admin controllers
 $routes->get('/admin', AdminController::class , 'adminHome');
 $routes->get('/admin/home', AdminController::class , 'adminHome');
@@ -56,6 +57,8 @@ $routes->post('/admin/deleteTag', AdminController::class , 'deleteTag');
 $routes->post('/admin/addTag', AdminController::class , 'addTag');
 $routes->get('/admin/archive', AdminController::class , 'archive');
 $routes->get('/admin/unarchive', AdminController::class , 'unarchive');
+$routes->get('/admin/ban', AdminController::class , 'ban');
+$routes->get('/admin/unban', AdminController::class , 'unban');
 $routes->dispatch();
 
 ?>

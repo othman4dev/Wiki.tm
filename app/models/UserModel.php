@@ -73,4 +73,15 @@
             $stmt->execute([$email, $_SESSION['user']['id']]);
             return true;
         }
+        public static function checkEmail($email) {
+            $sql = "SELECT * FROM user WHERE email = ?";
+            $stmt = connection::connect()->prepare($sql);
+            $stmt->execute([$email]);
+            $user = $stmt->fetch();
+            if (!empty($user)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }

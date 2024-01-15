@@ -924,3 +924,21 @@ legend {
     color: #ff0000;
     font-size: 15px;
 }
+.info-acc {
+    font-size: 19px;
+    background-color: rgb(90, 93, 121);
+    color: #fff;
+    padding: 7px;
+    border-radius: 5px;
+}
+.account-view {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: #00000020 0 0 8px -1px;
+    background-color: #fff;
+}

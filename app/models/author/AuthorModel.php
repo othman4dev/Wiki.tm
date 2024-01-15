@@ -8,6 +8,8 @@
     class AuthorModel {
 
         public static function createWiki($title, $description, $body, $author_id, $category, $tags) {
+            $title = HTMLspecialchars($title);
+            $description = HTMLspecialchars($description);
             $sql = "INSERT INTO wikis (title, description, body, author_id, category_id) VALUES (?, ?, ? ,? ,?)";
             $sql2 = "INSERT INTO wiki_tag (wiki_id, tag_id) VALUES (?, ?)";
             $sql3 = "SELECT * FROM wikis WHERE title = ? AND author_id = ? AND category_id = ? AND description = ? AND body = ?";
@@ -23,6 +25,8 @@
             return true;
         }
         public static function updateWiki($id, $title, $description, $body, $author_id, $category, $tags) {
+            $title = HTMLspecialchars($title);
+            $description = HTMLspecialchars($description);
             $sql = "DELETE FROM wikis WHERE id = ? ;";
             $sqladd = "INSERT INTO wikis (id,title,description,body,category_id,author_id) VALUES ( ? , ? , ? , ? , ? , ?)";
             $stmt = connection::connect()->prepare($sql);

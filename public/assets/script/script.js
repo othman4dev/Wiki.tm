@@ -136,6 +136,9 @@ if (locations == 'deleteTag') {
 } else if (locations == "unarchive") {
     window.location.href = '/admin/allwikis';
     position = 'allwikis';
+} else if (locations == "ban") {
+    window.location.href = '/admin/users';
+    position = 'users';
 }
 
 // Here is the side status system

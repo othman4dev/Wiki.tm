@@ -34,8 +34,10 @@
                         <input type="password" min="6" id="pass-login" class="inp" onkeyup="moveUp(this)" onfocus="moveUp(this)" onblur="moveDown(this)" name="password" required>
                     </label>
                     <?php 
-                    if (isset($_GET['login']) && $_GET['login'] == 'failed') {
+                    if (isset($_GET['message']) && $_GET['message'] == 'failed') {
                         echo '<p class="error-text">Incorrect username or password</p>';
+                    } else if (isset($_GET['message']) && $_GET['message'] == 'exist') {
+                        echo '<p class="error-text">This email already exist</p>';
                     }
                     ?>
                     <a href="/reset">Forgot Password ?</a>

@@ -115,10 +115,28 @@
                             </td>
                             <td><?php echo $user['created_at'] ?></td>
                             <td>
-                                <button class="table-btn">
-                                    Ban
-                                    <a href="/admin/archive?id=<?php echo $wiki['id'] ?>"><i class="bi bi-ban"></i></a>
-                                </button>
+                                <?php
+                                if ($user['role'] == 'banned') {
+                                    echo '
+                                    <a href="/admin/unban?id='.$user['id'].'">
+                                        <button class="table-btn">
+                                            Unban
+                                            <i class="bi bi-person-check-fill"></i>
+                                        </button>
+                                    </a>
+                                    ';
+                                } else if($user['role'] == 'user') {
+                                    echo '
+                                    <a href="/admin/ban?id='.$user['id'].'">
+                                        <button class="table-btn">
+                                            Ban
+                                            <i class="bi bi-ban"></i>
+                                        </button>
+                                    </a>
+                                    ';
+                                }
+                                
+                                ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>

@@ -105,4 +105,8 @@
             $controller = new \App\Controller();
             $controller->view('author/category', $data);
         }
+        public static function banned() {
+            $controller = new \App\Controller();
+            $controller->view('/banned');
+        }
     }

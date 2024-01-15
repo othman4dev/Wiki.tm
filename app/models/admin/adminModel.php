@@ -110,4 +110,16 @@
             $stmt->execute([$_GET['id']]);
             return true;
         }
+        public static function ban($id) {
+            $sql = "UPDATE user SET role = 'banned' WHERE id = ?";
+            $stmt = connection::connect()->prepare($sql);
+            $stmt->execute([$id]);
+            return true;
+        }
+        public static function unban($id) {
+            $sql = "UPDATE user SET role = 'user' WHERE id = ?";
+            $stmt = connection::connect()->prepare($sql);
+            $stmt->execute([$id]);
+            return true;
+        }
     }

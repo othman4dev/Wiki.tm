@@ -19,8 +19,11 @@
             } else if ($user && $user['role'] === 'admin') {
                 $_SESSION['user'] = $user;
                 header('Location: /admin');
+            } else if ($user && $user['role'] === 'banned') {
+                $_SESSION['user'] = $user;
+                header('Location: /banned');
             } else {
-                header('Location: /login?login=failed');
+                header('Location: /login?message=failed');
             }
         }
         public static function register() {
@@ -28,6 +31,10 @@
             $password = $_POST['password'];
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             $name = $_POST['name'];
+            $exist = UserModel::checkEmail($email);
+            if ($exist) {
+                header('Location: /login?message=exist');
+            }
             $user = UserModel::register($email, $hashedPassword, $name);
             if ($user) {
                 header('Location: /login');

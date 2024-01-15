@@ -169,4 +169,26 @@
                 $controller->view('error');
             }
         }
+        public static function ban() {
+            if ($_SESSION['user']['role'] == 'admin') {
+                AdminModel::ban($_GET['id']);
+                $data['users'] = AdminModel::getUsers();
+                $controller = new \App\Controller();
+                $controller->view('admin/users', $data);
+            } else {
+                $controller = new \App\Controller();
+                $controller->view('error');
+            }
+        }
+        public static function unban() {
+            if ($_SESSION['user']['role'] == 'admin') {
+                AdminModel::unban($_GET['id']);
+                $data['users'] = AdminModel::getUsers();
+                $controller = new \App\Controller();
+                $controller->view('admin/users', $data);
+            } else {
+                $controller = new \App\Controller();
+                $controller->view('error');
+            }
+        }
     }
