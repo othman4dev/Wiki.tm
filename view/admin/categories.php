@@ -128,11 +128,12 @@
                         <p id="moved">
                             Category Name
                         </p>
-                        <input autocomplete="off" spellcheck="false" type="text" class="inp-acc" name="name">
+                        <div id="available"></div>
+                        <input autocomplete="off" onkeyup="checkAvailabilityAjax(this,'catTitle','cat-post')" spellcheck="false" type="text" class="inp-acc" name="name">
                     </label>
                     <div class="delete-btns">
                         <div class="back success" onclick="this.parentNode.parentNode.parentNode.style.display = 'none'">Cancel</div>
-                        <button class="back" role="submit">Add <i class="bi bi-plus-circle-fill"></i></button></a>
+                        <button class="back" role="submit" id="cat-post">Add <i class="bi bi-plus-circle-fill"></i></button></a>
                     </div>
                 </form>
             </div>

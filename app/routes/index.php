@@ -39,6 +39,7 @@ $routes->get('/searchTag' , HomeController::class, 'searchTag');
 $routes->get('/categories' ,  HomeController::class , 'categories');
 $routes->get('/getCategory' ,  HomeController::class , 'getCategoryId');
 $routes->get('/banned' ,  HomeController::class , 'banned');
+$routes->get('/check', AuthorController::class , 'checkAvailability');
 # Admin controllers
 $routes->get('/admin', AdminController::class , 'adminHome');
 $routes->get('/admin/home', AdminController::class , 'adminHome');

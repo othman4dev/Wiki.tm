@@ -482,7 +482,6 @@ function validation(type) {
                 } else {
                     if (document.querySelector('#pass1').value.length < 7) {
                         document.querySelector('#pass1').setCustomValidity('Password must be at least 8 characters long');
-                        
                     } else {
                         document.querySelector('#pass1').setCustomValidity('');
                         if (document.querySelector('#pass2').value == '') {
@@ -505,5 +504,25 @@ function validation(type) {
                 }
             }
         }
+    }
+}
+function checkAvailabilityAjax(input,option,id) {
+    let title = input.value;
+    if (title == '') {
+        document.getElementById('available').innerHTML = '';
+    } else {
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById('available').innerHTML = this.responseText;
+                if (this.responseText == '<p style="color:red;font-size:14px;font-style:italic">Name already exist *</p>') {
+                    document.getElementById(id).disabled = true;
+                } else {
+                    document.getElementById(id).disabled = false;
+                }
+            }
+        };
+        xhttp.open("GET", "/check?option=" + option + "&title=" + title, true);
+        xhttp.send();
     }
 }

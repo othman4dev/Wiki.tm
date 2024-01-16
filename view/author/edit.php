@@ -145,9 +145,9 @@
                         </label>
                     </div>
                     <div class="card-2" style="justify-content: end;margin: 20px;padding-right: 50px;">
-                        <a href="/account" href="/accounts">
+                        <a href="/accounts">
                             <button class="back">
-                            <i class="bi bi-arrow-left-square-fill"></i> Cancel
+                                <i class="bi bi-arrow-left-square-fill"></i> Cancel
                             </button>
                         </a>
                         <button class="back" type="submit" onclick="this.parentNode.parentNode.submit()">

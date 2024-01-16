@@ -109,7 +109,7 @@
                     </div>
                     <div class="stat">
                         <h3>Member Since</h3>
-                        <?= date('Y-m-d', strtotime($data['user']['created_at'])) ?>
+                        <?=date('Y-m-d', strtotime($data['user']['created_at'])) ?>
                     </div>
                 </div>
             </div>
@@ -132,7 +132,8 @@
                     <i class="bi bi-x-lg" id="ex" onclick="showWiki('hide')"></i>
                     <label class="label-title">
                         <p class="moved">Title</p>
-                        <input type="text" name="title" class="wiki-inp" placeholder="Wiki's Title" required>
+                        <div id="available"></div>
+                        <input type="text" name="title" class="wiki-inp" onkeyup="checkAvailabilityAjax(this,'wikiTitle','post-wiki')" placeholder="Wiki's Title" required>
                     </label>
                     <label class="label-title">
                         <p class="moved">Description</p>
@@ -178,15 +179,23 @@
                         </label>
                     </div>
                     <div class="card-2" style="justify-content: end;margin: 20px;padding-right: 50px;">
-                        <button class="back" type="submit" onclick="this.parentNode.parentNode.submit()">
+                        <button class="back" type="submit" id="post-wiki" onclick="this.parentNode.parentNode.submit()">
                             Post <i class="bi bi-arrow-right-square-fill"></i>
                         </button>
                     </div>
                 </form>
             </div>
             <div class="card-inv"><h1>Your Work :</h1></div>
-            <div class="card-2">
+                <div class="card-2">
                 <?php
+                if (empty($same)) {
+
+                    echo '<div class="card slim grow"><div class="no-results">
+                            
+                            <i class="bi bi-exclamation-triangle-fill"></i><h1>You have no work yet</h1>
+                            </div>
+                        </div>';
+                }
                     foreach ($same as $sameWiki) {
                         echo '<div class="card fixed">
                         <a href="/wiki?id='.$sameWiki['wiki_id'].'" >
@@ -222,7 +231,7 @@
                         </div>';
                     }
                 ?>
-            </div>
+                </div>
             <div class="card-2 slim">
                 <a href="home" style="width:300px;">
                     <button class="back">

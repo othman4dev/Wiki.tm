@@ -31,6 +31,23 @@
         <h1> <i class="bi bi-exclamation-triangle-fill"></i> Error</h1>
         <h3>An error occurred while processing your request.</h3>
         <i>This could arise from factors such as an <u>incorrect password</u>, <u>session timeout</u>, <u>invalid input</u>, <u>connectivity issues</u>, or a <u>server error</u>.</i>
+        <p>Error code : <strong><?=$data['error']?></strong>, If this error percistes please contact the administrators</p>
+    </div>
+    <div class="error-modal">
+        <div class="error-head">
+            <p>Message</p>
+            <i class="bi bi-x-lg" style="cursor:pointer" onclick="this.parentNode.parentNode.style.display = 'none';"></i>
+        </div>
+        <div class="error-main">
+            <i class="bi bi-exclamation-circle-fill" style="font-size:40px"></i>
+            <p><?=$data['error']?></p>
+        </div>
+        <div class="error-btns">
+            <div class="close" onclick="this.parentNode.parentNode.style.display = 'none';">Close</div>
+            <a href="/accounts">
+                <div class="close" style="background-color:#0091dc;">Back</div>
+            </a>
+        </div>
     </div>
     <a href="/"><button class="back"><i class="bi bi-caret-left-fill"></i> Return To Dashboard</button></a>
 </body>

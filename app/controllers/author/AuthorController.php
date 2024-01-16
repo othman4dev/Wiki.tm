@@ -27,7 +27,8 @@
                 $data['same'] = HomeModel::getSameAuthor($_SESSION['user']['id']);
                 $controller->view('/author/account', $data);
             } else {
-                $controller->view('/error');
+                $data['error'] = "Wiki name already exist, choose a diffrent name or subject";
+                $controller->view('/error', $data);
             }
         }
         public static function editWiki() {
@@ -105,5 +106,14 @@
             $data['categoryCount'] = HomeModel::getCategoryCount();
             $controller->view('/author/account', $data);
         }
-        
+        public static function checkAvailability() {
+            $option = $_GET['option'];
+            $title = $_GET['title'];
+            $result = AuthorModel::checkAvailability($option,$title);
+            if (!empty($result)) {
+                echo '<p style="color:red;font-size:14px;font-style:italic">Name already exist *</p>';
+            } else {
+                echo '<p style="color:green;font-size:14px;font-style:italic">Valid wiki name</p>';
+            }
+        }
     }

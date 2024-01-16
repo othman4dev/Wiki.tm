@@ -101,6 +101,7 @@
             <div id="tagModal">
                 <form action="/404" id="actionHere" method="post" class="cat-edit" onsubmit="event.preventDefault();">
                     <label for="">
+                        
                         <p id="moved">
                             Tag name
                         </p>
@@ -120,11 +121,12 @@
                         <p id="moved">
                             Tag name
                         </p>
-                        <input autocomplete="off" spellcheck="false" type="text" class="inp-acc" name="name">
+                        <div id="available"></div>
+                        <input autocomplete="off" onkeyup="checkAvailabilityAjax(this,'tagTitle','post-tag')" spellcheck="false" type="text" class="inp-acc" name="name">
                     </label>
                     <div class="delete-btns">
                         <div class="back success" onclick="this.parentNode.parentNode.parentNode.style.display = 'none'">Cancel</div>
-                        <button class="back" role="submit">Add <i class="bi bi-plus-circle-fill"></i></button></a>
+                        <button class="back" role="submit" id="post-tag">Add <i class="bi bi-plus-circle-fill"></i></button></a>
                     </div>
                 </form>
             </div>
